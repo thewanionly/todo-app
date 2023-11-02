@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier:check-all": "npx prettier --check .",
-    "prettier:write-all": "npx prettier --write ."
+    "prettier:check": "npx prettier --check .",
+    "prettier:fix": "npx prettier --write ."
   },
   "dependencies": {
     "next": "14.0.1",
