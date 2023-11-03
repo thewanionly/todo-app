@@ -5,5 +5,8 @@
   "trailingComma": "es5",
   "printWidth": 100,
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "importOrder": ["^react(.*)", "^next(.*)", "<THIRD_PARTY_MODULES>", "@/(.*)", "^[./]"],
+  "importOrderSeparation": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }
