@@ -19,12 +19,13 @@ const jestConfig = async () => {
 
   return {
     ...nextJestConfig,
-    // TODO: Add when svgr is needed
-    // // Set up this way to fix svgr issue in Jest. Source: https://github.com/vercel/next.js/discussions/42535#discussion-4542627
-    // moduleNameMapper: {
-    //   ...nextJestConfig.moduleNameMapper,
-    //   '\\.svg$': '<rootDir>/src/tests/__mocks__/svg.ts',
-    // },
+    moduleNameMapper: {
+      // TODO: Add when svgr is needed
+      // // Set up this way to fix svgr issue in Jest. Source: https://github.com/vercel/next.js/discussions/42535#discussion-4542627
+      // '\\.svg$': '<rootDir>/src/tests/__mocks__/svg.ts',
+      ...nextJestConfig.moduleNameMapper,
+      '^@/(.*)$': '<rootDir>/src/$1',
+    },
   };
 };
 
