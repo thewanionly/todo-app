@@ -1,6 +1,9 @@
 import type { Preview } from '@storybook/react';
 
 const preview: Preview = {
+  globalTypes: {
+    darkMode: {},
+  },
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
