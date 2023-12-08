@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={josefinSans.className}>{children}</body>
+      <body className={`${josefinSans.className} bg-gray-light dark:bg-dimmed`}>{children}</body>
     </html>
   );
 }
