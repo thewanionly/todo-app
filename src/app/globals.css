@@ -2,16 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light mode (default theme)  */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --buton-bg: #fff;
+  --button-text: #494c6b;
+  --body-bg: #fafafa;
+  --body-text: #9495a5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Dark mode */
+html.dark,
+#storybook-root.dark {
+  --buton-bg: #25273d;
+  --button-text: #c8cbe7;
+  --body-bg: #171823;
+  --body-text: #5b5e7e;
 }

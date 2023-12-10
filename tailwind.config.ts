@@ -10,8 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'gray-light': '#FAFAFA',
-        dimmed: '#171823',
+        'button-bg': 'var(--buton-bg)',
+        'button-text': 'var(--button-text)',
+        'body-bg': 'var(--body-bg)',
+        'body-text': 'var(--body-text)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

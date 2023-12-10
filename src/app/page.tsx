@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-3xl font-bold text-black dark:text-white">TODO</h1>
+      <h1 className="text-3xl font-bold text-body-text">TODO</h1>
       <Button onClick={toggleDarkMode}>
         {isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       </Button>
