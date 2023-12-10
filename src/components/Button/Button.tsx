@@ -11,7 +11,7 @@ export const Button = ({ children, onClick }: ButtonProps) => {
   return (
     <button
       type="button"
-      className="rounded-md bg-button-bg px-6 py-3 text-button-text "
+      className="rounded-md bg-todo-item-toggle-completed px-6 py-3 text-todo-item-bg"
       onClick={onClick}
     >
       {children}
