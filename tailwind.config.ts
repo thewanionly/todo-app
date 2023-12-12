@@ -32,8 +32,6 @@ const config: Config = {
           'linear-gradient(to bottom right, var(--todo-item-toggle-border-hover-1), var(--todo-item-toggle-border-hover-1))',
         'todo-item-toggle-completed':
           'linear-gradient(to bottom right, var(--todo-item-toggle-completed-1), var(--todo-item-toggle-completed-2))',
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },
