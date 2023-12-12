@@ -33,6 +33,9 @@ const config: Config = {
         'todo-item-toggle-completed':
           'linear-gradient(to bottom right, var(--todo-item-toggle-completed-1), var(--todo-item-toggle-completed-2))',
       },
+      fontFamily: {
+        'josefin-sans': ['var(--font-josefin-sans)'],
+      },
     },
   },
   plugins: [],

@@ -50,3 +50,8 @@ html.dark,
   --clear-completd-btn-text: #5b5e7e;
   --clear-completd-btn-text-hover: #e3e4f1;
 }
+
+html,
+#storybook-decorator {
+  font-family: var(--font-josefin-sans);
+}

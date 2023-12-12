@@ -1,6 +1,9 @@
+import React from 'react';
+
 import type { Preview } from '@storybook/react';
 
 import '../src/app/globals.css';
+import { josefinSans } from '../src/lib/fonts';
 
 const preview: Preview = {
   globalTypes: {
@@ -15,6 +18,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div id="storybook-decorator" className={josefinSans.variable}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;

@@ -1,12 +1,8 @@
 import type { Metadata } from 'next';
-import { Josefin_Sans } from 'next/font/google';
+
+import { josefinSans } from '@/lib/fonts';
 
 import './globals.css';
-
-const josefinSans = Josefin_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: 'Todo App',
@@ -15,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${josefinSans.className} bg-body-bg`}>{children}</body>
+    <html lang="en" className={`${josefinSans.variable} bg-body-bg`}>
+      <body>{children}</body>
     </html>
   );
 }
