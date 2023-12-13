@@ -8,6 +8,7 @@
   --body-text: #9495a5;
   --todo-item-bg: #fff;
   --todo-item-box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
+  --todo-item-toggle-bg: #fff;
   --todo-item-toggle-border: #e3e4f1;
   --todo-item-toggle-border-hover-1: #55ddff;
   --todo-item-toggle-border-hover-2: #c058f3;
@@ -33,6 +34,7 @@ html.dark,
   --body-text: #5b5e7e;
   --todo-item-bg: #25273d;
   --todo-item-box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
+  --todo-item-toggle-bg: #25273d;
   --todo-item-toggle-border: #393a4b;
   --todo-item-toggle-border-hover-1: #55ddff;
   --todo-item-toggle-border-hover-2: #c058f3;

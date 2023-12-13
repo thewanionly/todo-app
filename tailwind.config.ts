@@ -14,6 +14,7 @@ const config: Config = {
         'body-text': 'var(--body-text)',
         'todo-item-bg': 'var(--todo-item-bg)',
         'todo-item-box-shadow': 'var(--todo-item-box-shadow)',
+        'todo-item-toggle-bg': 'var(--todo-item-toggle-bg)',
         'todo-item-toggle-border': 'var(--todo-item-toggle-border)',
         'todo-item-placeholder-text': 'var(--todo-item-placeholder-text)',
         'todo-item-text': 'var(--todo-item-text)',
