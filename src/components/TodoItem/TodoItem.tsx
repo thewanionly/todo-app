@@ -1,3 +1,5 @@
+import CloseIcon from 'public/icons/close-icon.svg';
+
 export enum TodoItemMode {
   CREATE = 'create',
   READ = 'read',
@@ -64,6 +66,11 @@ export const TodoItem = ({ mode, value }: TodoItemProps) => {
     <div className="flex gap-3 rounded-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow">
       <TodoItemCheckbox checked={false} disabled={mode === TodoItemMode.CREATE} />
       {mode === TodoItemMode.COMPLETED ? <span>{value}</span> : <TodoItemInput mode={mode} />}
+      {mode !== TodoItemMode.CREATE && (
+        <button aria-label="remove-button">
+          <CloseIcon />
+        </button>
+      )}
     </div>
   );
 };

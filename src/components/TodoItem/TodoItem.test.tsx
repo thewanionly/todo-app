@@ -48,13 +48,12 @@ describe('TodoItem', () => {
       expect(checkbox).not.toBeChecked();
     });
 
-    xit(`does not display a remove icon button`, () => {
-      // TODO: here
+    it(`does not display a remove button`, () => {
       render(<TodoItem mode={TodoItemMode.CREATE} />);
 
-      const inputBox = screen.getByRole('textbox');
+      const removeBtn = screen.queryByRole('button', { name: 'remove-button' });
 
-      expect(inputBox).toHaveAttribute('placeholder', CREATE_TODO_PLACEHOLDER);
+      expect(removeBtn).not.toBeInTheDocument();
     });
   });
 });
