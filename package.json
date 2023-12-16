@@ -12,7 +12,7 @@
     "prepare": "husky install",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --verbose",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --ci",
     "build-storybook": "storybook build"
   },
   "dependencies": {
