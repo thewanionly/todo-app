@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { Button } from '@/components/Button';
+import { TodoItem, TodoItemMode } from '@/components/TodoItem';
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,6 +19,7 @@ export default function Home() {
       <Button onClick={toggleDarkMode}>
         {isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       </Button>
+      <TodoItem mode={TodoItemMode.READ} value="Test only" />
     </main>
   );
 }
