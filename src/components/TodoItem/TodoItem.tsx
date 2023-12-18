@@ -1,4 +1,4 @@
-import CloseIcon from 'public/icons/close-icon.svg';
+import { Icon, IconName } from '../Icon';
 
 export enum TodoItemMode {
   CREATE = 'create',
@@ -68,7 +68,7 @@ export const TodoItem = ({ mode, value }: TodoItemProps) => {
       {mode === TodoItemMode.COMPLETED ? <span>{value}</span> : <TodoItemInput mode={mode} />}
       {mode !== TodoItemMode.CREATE && (
         <button aria-label="remove-button">
-          <CloseIcon />
+          <Icon name={IconName.Close} className="text-todo-item-remove-btn" />
         </button>
       )}
     </div>
