@@ -13,7 +13,6 @@ const config: Config = {
         'body-bg': 'var(--body-bg)',
         'body-text': 'var(--body-text)',
         'todo-item-bg': 'var(--todo-item-bg)',
-        'todo-item-box-shadow': 'var(--todo-item-box-shadow)',
         'todo-item-toggle-bg': 'var(--todo-item-toggle-bg)',
         'todo-item-toggle-border': 'var(--todo-item-toggle-border)',
         'todo-item-placeholder-text': 'var(--todo-item-placeholder-text)',
@@ -21,7 +20,6 @@ const config: Config = {
         'todo-item-text-completed': 'var(--todo-item-text-completed)',
         'todo-item-remove-btn': 'var(--todo-item-remove-btn)',
         'todo-list-bg': 'var(--todo-list-bg)',
-        'todo-list-box-shadow': 'var(--todo-list-box-shadow)',
         'filter-buttons-text': 'var(--filter-buttons-text)',
         'filter-buttons-text-hover': 'var(--filter-buttons-text-hover)',
         'filter-buttons-text-active': 'var(--filter-buttons-text-active)',
@@ -33,6 +31,10 @@ const config: Config = {
           'linear-gradient(to bottom right, var(--todo-item-toggle-border-hover-1), var(--todo-item-toggle-border-hover-1))',
         'todo-item-toggle-completed':
           'linear-gradient(to bottom right, var(--todo-item-toggle-completed-1), var(--todo-item-toggle-completed-2))',
+      },
+      boxShadow: {
+        'todo-item-box-shadow': 'var(--todo-item-box-shadow)',
+        'todo-list-box-shadow': 'var(--todo-list-box-shadow)',
       },
       fontFamily: {
         'josefin-sans': ['var(--font-josefin-sans)'],
