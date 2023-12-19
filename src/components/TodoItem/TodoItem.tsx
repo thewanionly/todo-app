@@ -2,7 +2,7 @@ import { Icon, IconName } from '../Icon';
 
 export enum TodoItemMode {
   CREATE = 'create',
-  READ = 'read',
+  ACTIVE = 'active',
   COMPLETED = 'completed',
 }
 
@@ -12,7 +12,7 @@ type TodoItemProps =
       value?: never;
     }
   | {
-      mode: TodoItemMode.READ;
+      mode: TodoItemMode.ACTIVE;
       value: string;
     }
   | {

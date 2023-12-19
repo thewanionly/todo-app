@@ -19,7 +19,7 @@ export default function Home() {
       <Button onClick={toggleDarkMode}>
         {isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       </Button>
-      <TodoItem mode={TodoItemMode.READ} value="Test only" />
+      <TodoItem mode={TodoItemMode.ACTIVE} value="Test only" />
     </main>
   );
 }

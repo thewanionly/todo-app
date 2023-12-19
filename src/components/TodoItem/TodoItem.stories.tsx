@@ -15,10 +15,10 @@ export const CreateMode: Story = {
   },
 };
 
-export const ReadMode: Story = {
+export const ActiveMode: Story = {
   args: {
-    mode: TodoItemMode.READ,
-    value: 'Read mode',
+    mode: TodoItemMode.ACTIVE,
+    value: 'Active mode',
   },
 };
 
