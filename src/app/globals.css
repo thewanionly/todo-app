@@ -14,6 +14,7 @@
   --todo-item-toggle-border-hover-2: #c058f3;
   --todo-item-toggle-completed-1: #55ddff;
   --todo-item-toggle-completed-2: #c058f3;
+  --todo-item-toggle-completed-check-icon: #fff;
   --todo-item-placeholder-text: #9495a5;
   --todo-item-text: #494c6b;
   --todo-item-text-completed: #d1d2da;
@@ -40,6 +41,7 @@ html.dark,
   --todo-item-toggle-border-hover-2: #c058f3;
   --todo-item-toggle-completed-1: #55ddff;
   --todo-item-toggle-completed-2: #c058f3;
+  --todo-item-toggle-completed-check-icon: #fff;
   --todo-item-placeholder-text: #767992;
   --todo-item-text: #c8cbe7;
   --todo-item-text-completed: #4d5067;

@@ -15,6 +15,7 @@ const config: Config = {
         'todo-item-bg': 'var(--todo-item-bg)',
         'todo-item-toggle-bg': 'var(--todo-item-toggle-bg)',
         'todo-item-toggle-border': 'var(--todo-item-toggle-border)',
+        'todo-item-toggle-completed-check-icon': 'var(--todo-item-toggle-completed-check-icon)',
         'todo-item-placeholder-text': 'var(--todo-item-placeholder-text)',
         'todo-item-text': 'var(--todo-item-text)',
         'todo-item-text-completed': 'var(--todo-item-text-completed)',
@@ -28,7 +29,7 @@ const config: Config = {
       },
       backgroundImage: {
         'todo-item-toggle-border-hover':
-          'linear-gradient(to bottom right, var(--todo-item-toggle-border-hover-1), var(--todo-item-toggle-border-hover-1))',
+          'linear-gradient(to bottom right, var(--todo-item-toggle-border-hover-1), var(--todo-item-toggle-border-hover-2))',
         'todo-item-toggle-completed':
           'linear-gradient(to bottom right, var(--todo-item-toggle-completed-1), var(--todo-item-toggle-completed-2))',
       },

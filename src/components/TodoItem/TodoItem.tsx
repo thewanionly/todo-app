@@ -41,10 +41,10 @@ type TodoItemCheckboxProps = {
 export const CREATE_TODO_PLACEHOLDER = 'Create a new todo...';
 
 const TodoItemCheckbox = ({ checked, disabled = false }: TodoItemCheckboxProps) => {
-  const [checkboxValue, setCheckboxValue] = useState(checked);
+  const [isChecked, setIsChecked] = useState(checked);
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCheckboxValue(event.target.checked);
+    setIsChecked(event.target.checked);
   };
 
   return (
@@ -52,20 +52,29 @@ const TodoItemCheckbox = ({ checked, disabled = false }: TodoItemCheckboxProps) 
       <input
         type="checkbox"
         id="todo-item-checkbox"
-        className="hidden"
-        checked={checkboxValue}
+        className="peer appearance-none"
+        checked={isChecked}
         onChange={handleCheckboxChange}
         disabled={disabled}
       />
       <span
-        className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border border-todo-item-toggle-border bg-todo-item-toggle-bg"
-        {...(!disabled ? { tabIndex: 0 } : {})}
+        className={`${
+          isChecked
+            ? 'bg-todo-item-toggle-completed'
+            : 'bg-todo-item-toggle-border hover:bg-todo-item-toggle-border-hover'
+        } peer-focus-visible:todo-item-checkbox-focus flex h-5 w-5 cursor-pointer items-center justify-center rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inherit`}
       >
-        {/* TODO: implement checked state here */}
-        <span
-          className={`${!checkboxValue ? 'hidden' : ''} h-2 w-2 rounded-full bg-white`}
-          aria-hidden="true"
-        ></span>
+        {isChecked ? (
+          <Icon
+            name={IconName.Check}
+            className={`h-2 w-2.5 text-todo-item-toggle-completed-check-icon`}
+          />
+        ) : (
+          <span
+            className={`h-[19px] w-[19px] rounded-full bg-todo-item-toggle-bg`}
+            aria-hidden="true"
+          />
+        )}
       </span>
     </label>
   );
