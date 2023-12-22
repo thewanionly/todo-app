@@ -20,6 +20,7 @@ const config: Config = {
         'todo-item-text': 'var(--todo-item-text)',
         'todo-item-text-completed': 'var(--todo-item-text-completed)',
         'todo-item-remove-btn': 'var(--todo-item-remove-btn)',
+        'todo-item-remove-btn-hover': 'var(--todo-item-remove-btn-hover)',
         'todo-list-bg': 'var(--todo-list-bg)',
         'filter-buttons-text': 'var(--filter-buttons-text)',
         'filter-buttons-text-hover': 'var(--filter-buttons-text-hover)',

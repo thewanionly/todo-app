@@ -25,6 +25,7 @@ export const ActiveMode: Story = {
     ...commonArgs,
     mode: TodoItemMode.ACTIVE,
     value: 'Active mode',
+    onDelete: () => {},
   },
 };
 
@@ -33,5 +34,6 @@ export const CompletedMode: Story = {
     ...commonArgs,
     mode: TodoItemMode.COMPLETED,
     value: 'Completed mode',
+    onDelete: () => {},
   },
 };

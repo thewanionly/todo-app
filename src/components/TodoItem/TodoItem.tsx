@@ -16,14 +16,17 @@ type TodoItemConditionalProps =
   | {
       mode: TodoItemMode.CREATE;
       value?: never;
+      onDelete?: never;
     }
   | {
       mode: TodoItemMode.ACTIVE;
       value: string;
+      onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
     }
   | {
       mode: TodoItemMode.COMPLETED;
       value: string;
+      onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
     };
 
 type TodoItemProps = TodoItemCommonProps & TodoItemConditionalProps;
@@ -97,7 +100,7 @@ const TodoItemInput = ({ mode, value = '' }: TodoItemInputProps) => {
   );
 };
 
-export const TodoItem = ({ className, mode, value }: TodoItemProps) => {
+export const TodoItem = ({ className, mode, value, onDelete }: TodoItemProps) => {
   return (
     <div
       className={`flex gap-3 rounded-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow ${className}`}
@@ -109,8 +112,11 @@ export const TodoItem = ({ className, mode, value }: TodoItemProps) => {
         <TodoItemInput mode={mode} value={value ?? ''} />
       )}
       {mode !== TodoItemMode.CREATE && (
-        <button aria-label="remove-button">
-          <Icon name={IconName.Close} className="text-todo-item-remove-btn" />
+        <button type="button" aria-label="remove-button" onClick={onDelete}>
+          <Icon
+            name={IconName.Close}
+            className="text-todo-item-remove-btn hover:text-todo-item-remove-btn-hover"
+          />
         </button>
       )}
     </div>

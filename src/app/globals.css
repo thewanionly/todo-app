@@ -18,7 +18,8 @@
   --todo-item-placeholder-text: #9495a5;
   --todo-item-text: #494c6b;
   --todo-item-text-completed: #d1d2da;
-  --todo-item-remove-btn: #494c6b;
+  --todo-item-remove-btn: #9495a5;
+  --todo-item-remove-btn-hover: #494c6b;
   --todo-list-bg: #fff;
   --todo-list-box-shadow: 0px 35px 50px -15px rgba(194, 195, 214, 0.5);
   --filter-buttons-text: #9495a5;
@@ -46,6 +47,7 @@ html.dark,
   --todo-item-text: #c8cbe7;
   --todo-item-text-completed: #4d5067;
   --todo-item-remove-btn: #5b5e7e;
+  --todo-item-remove-btn-hover: #e3e4f1;
   --todo-list-bg: #25273d;
   --todo-list-box-shadow: 0px 35px 50px -15px rgba(0, 0, 0, 0.5);
   --filter-buttons-text: #5b5e7e;
