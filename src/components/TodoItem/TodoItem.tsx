@@ -61,7 +61,7 @@ const TodoItemCheckbox = ({ checked, disabled = false }: TodoItemCheckboxProps) 
         disabled={disabled}
       />
       <span
-        className={`${
+        className={`${disabled ? 'pointer-events-none' : 'pointer-events-auto'} ${
           isChecked
             ? 'bg-todo-item-toggle-completed'
             : 'bg-todo-item-toggle-border hover:bg-todo-item-toggle-border-hover'
