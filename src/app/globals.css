@@ -61,10 +61,9 @@ html.dark,
 
 html,
 #storybook-decorator {
-  font-family: var(--font-josefin-sans);
+  @apply font-josefin-sans;
 }
 
 html *:focus-visible {
-  outline: 1px solid var(--focus-visible-outline);
-  outline-offset: 2px;
+  @apply outline outline-1 outline-offset-2 outline-focus-visible-outline;
 }

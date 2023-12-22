@@ -40,7 +40,7 @@ const config: Config = {
         'todo-list-box-shadow': 'var(--todo-list-box-shadow)',
       },
       fontFamily: {
-        'josefin-sans': ['var(--font-josefin-sans)'],
+        'josefin-sans': ['var(--josefin-sans-font)'],
       },
     },
   },
