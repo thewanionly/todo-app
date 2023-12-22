@@ -51,7 +51,7 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
       <input
         type="checkbox"
         id="todo-item-checkbox"
-        className="peer appearance-none"
+        className="peer appearance-none focus-visible:outline-0"
         checked={checked}
         onChange={onChange}
         disabled={disabled}
@@ -61,7 +61,7 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
           checked
             ? 'bg-todo-item-toggle-completed'
             : 'bg-todo-item-toggle-border hover:bg-todo-item-toggle-border-hover'
-        } peer-focus-visible:todo-item-checkbox-focus flex h-5 w-5 cursor-pointer items-center justify-center rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inherit`}
+        } flex h-5 w-5 cursor-pointer items-center justify-center rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus-visible-outline`}
       >
         {checked ? (
           <Icon

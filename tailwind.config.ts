@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         'body-bg': 'var(--body-bg)',
         'body-text': 'var(--body-text)',
+        'focus-visible-outline': 'var(--focus-visible-outline)',
         'todo-item-bg': 'var(--todo-item-bg)',
         'todo-item-toggle-bg': 'var(--todo-item-toggle-bg)',
         'todo-item-toggle-border': 'var(--todo-item-toggle-border)',
