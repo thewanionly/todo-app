@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
+import { Button } from '../Button';
 import { Icon, IconName } from '../Icon';
 
 export enum TodoItemMode {
@@ -121,12 +122,12 @@ export const TodoItem = ({ className, mode, value, onDelete }: TodoItemProps) =>
         isCompleted={completed}
       />
       {mode !== TodoItemMode.CREATE && (
-        <button type="button" aria-label="remove-button" onClick={onDelete}>
+        <Button aria-label="remove-button" className="p-0" onClick={onDelete}>
           <Icon
             name={IconName.Close}
             className="text-todo-item-remove-btn hover:text-todo-item-remove-btn-hover"
           />
-        </button>
+        </Button>
       )}
     </div>
   );

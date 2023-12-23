@@ -1,6 +1,6 @@
-// Button.stories.ts|tsx
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { Icon as IconComponent, IconName } from '../Icon';
 import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
@@ -10,8 +10,14 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const Text: Story = {
   args: {
-    children: 'Primary',
+    children: 'Text Button',
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    children: <IconComponent name={IconName.Close} />,
   },
 };
