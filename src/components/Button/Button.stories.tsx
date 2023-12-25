@@ -12,12 +12,14 @@ type Story = StoryObj<typeof Button>;
 
 export const Text: Story = {
   args: {
+    className: 'hover:brightness-150',
     children: 'Text Button',
   },
 };
 
 export const Icon: Story = {
   args: {
+    className: 'hover:brightness-150',
     children: <IconComponent name={IconName.Close} />,
   },
 };
