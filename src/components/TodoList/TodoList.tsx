@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 
 import { Button } from '../Button';
 import { TodoItem, TodoItemMode } from '../TodoItem';
+import { generateTodoListCountText } from './TodoList.utils';
 
 export interface TodoItemType {
   id: string;
@@ -30,6 +31,9 @@ export const TodoList = ({
 
   const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Don't add a new todo item if there's no value
+    if (!newTodoItemValue) return;
 
     // Add item to the list
     onAddItem(newTodoItemValue);
@@ -64,7 +68,7 @@ export const TodoList = ({
           onEditValue={handleNewTodoItemValueChange}
         />
         {/* Need to add in order for form submission by "enter" key works in Jest env as well */}
-        <Button type="submit" className="absolute left-0 top-0" tabIndex={-1} />
+        <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
       </form>
       <ul>
         {items.map(({ id, value, isCompleted }, index) => (
@@ -82,6 +86,9 @@ export const TodoList = ({
           </li>
         ))}
       </ul>
+      <div className="flex gap-3 rounded-b-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow">
+        <span className="text-sm text-body-text">{generateTodoListCountText(items.length)}</span>
+      </div>
     </div>
   );
 };

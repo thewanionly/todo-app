@@ -15,6 +15,7 @@ export const TODO_LIST_FILTERS = [
   },
 ];
 
+// mocks
 export const MOCKED_TODO_LIST_ITEMS: TodoItemType[] = [
   {
     id: 'ab1',

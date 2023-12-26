@@ -5,6 +5,7 @@ import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';
 import { MOCKED_TODO_LIST_ITEMS } from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
+import { generateTodoListCountText } from './TodoList.utils';
 
 const TodoListSetup = () => {
   const { items, onAddItem, onItemValueChange, onItemCompletedChange, onDeleteItem } =
@@ -43,10 +44,13 @@ describe('TodoList', () => {
       expect(addTodoInput).toBeInTheDocument();
     });
 
-    xit('displays the number of todo list items', () => {
+    it('displays the number of todo list items', () => {
       setup();
 
-      // TODO:
+      const todoListCount = screen.getByText(
+        generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length)
+      );
+      expect(todoListCount).toBeInTheDocument();
     });
 
     xit('displays the todo list filter buttons', () => {
@@ -98,28 +102,31 @@ describe('TodoList', () => {
       // assert inputted value is added in todo list
       expect(screen.getByDisplayValue(newTodoItemValue)).toBeInTheDocument();
 
-      // TODO:
-      // assert the todo list count as well
+      // assert the todo list count if updated
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length + 1))
+      ).toBeInTheDocument();
     });
 
-    xit('does not add a new todo item in the list after typing in the input field for creating new todo item and pressing Enter key when the value is empty', async () => {
+    it('does not add a new todo item in the list after typing in the input field for creating new todo item and pressing Enter key when the value is empty', async () => {
       setup();
 
-      // input value
-      const newTodoItemValue = '';
+      // assert input value if it's empty
       const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
-      await userEvent.type(addTodoInput, newTodoItemValue);
+      expect(addTodoInput).toHaveValue('');
 
       // assert todo list count before entering
-      // TODO:
-      // expect(addTodoInput).toHaveValue(newTodoItemValue);
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+      ).toBeInTheDocument();
 
       // click enter
       await userEvent.type(addTodoInput, '{enter}');
 
       // assert todo list count after entering
-      // TODO:
-      // expect(screen.getByDisplayValue(newTodoItemValue)).not.toBeInTheDocument();
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+      ).toBeInTheDocument();
     });
 
     xit('removes a todo item from the list after clicking on the delete button on the same todo item', () => {
