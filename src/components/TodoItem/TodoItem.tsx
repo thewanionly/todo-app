@@ -129,7 +129,9 @@ export const TodoItem = ({
 
   return (
     <div
-      className={`flex gap-3 rounded-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow ${className}`}
+      className={`flex gap-3 rounded-[5px] bg-todo-item-bg px-5 ${
+        mode === TodoItemMode.CREATE ? 'py-3.5' : 'py-4'
+      } shadow-todo-item-box-shadow ${className}`}
     >
       <TodoItemCheckbox
         checked={completed}

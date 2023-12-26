@@ -1,18 +1,28 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
+import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';
 import { MOCKED_TODO_LIST_ITEMS } from './TodoList.constants';
+import { useTodoList } from './TodoList.hooks';
 
-const setup = () => {
-  render(
+const TodoListSetup = () => {
+  const { items, onAddItem, onItemValueChange, onItemCompletedChange, onDeleteItem } =
+    useTodoList(MOCKED_TODO_LIST_ITEMS);
+
+  return (
     <TodoList
-      items={MOCKED_TODO_LIST_ITEMS}
-      onAddItem={jest.fn()}
-      onItemValueChange={jest.fn()}
-      onItemCompletedChange={jest.fn()}
-      onDeleteItem={jest.fn()}
+      items={items}
+      onAddItem={onAddItem}
+      onItemValueChange={onItemValueChange}
+      onItemCompletedChange={onItemCompletedChange}
+      onDeleteItem={onDeleteItem}
     />
   );
+};
+
+const setup = () => {
+  render(<TodoListSetup />);
 };
 
 describe('TodoList', () => {
@@ -26,10 +36,11 @@ describe('TodoList', () => {
       });
     });
 
-    xit('displays an input field for adding new todo item', () => {
+    it('displays an input field for adding new todo item', () => {
       setup();
 
-      // TODO:
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      expect(addTodoInput).toBeInTheDocument();
     });
 
     xit('displays the number of todo list items', () => {
@@ -52,12 +63,63 @@ describe('TodoList', () => {
   });
 
   describe('Interactions', () => {
-    xit('adds a new todo item in the list after typing in the input field for creating new todo item and pressing Enter key', () => {
+    it('clears the value in the "add new todo item" input field after pressing Enter key and the new item has been added', async () => {
       setup();
 
-      // TODO:
+      // input value
+      const newTodoItemValue = 'New value test';
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput, newTodoItemValue);
 
+      // assert inputted value is reflected in the input field
+      expect(addTodoInput).toHaveValue(newTodoItemValue);
+
+      // click enter
+      await userEvent.type(addTodoInput, '{enter}');
+
+      // assert inputted value is cleared from the input field
+      expect(addTodoInput).toHaveValue('');
+    });
+
+    it('adds a new todo item in the list after typing in the input field for creating new todo item and pressing Enter key', async () => {
+      setup();
+
+      // input value
+      const newTodoItemValue = 'New value test';
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput, newTodoItemValue);
+
+      // assert inputted value is reflected in the input field
+      expect(addTodoInput).toHaveValue(newTodoItemValue);
+
+      // click enter
+      await userEvent.type(addTodoInput, '{enter}');
+
+      // assert inputted value is added in todo list
+      expect(screen.getByDisplayValue(newTodoItemValue)).toBeInTheDocument();
+
+      // TODO:
       // assert the todo list count as well
+    });
+
+    xit('does not add a new todo item in the list after typing in the input field for creating new todo item and pressing Enter key when the value is empty', async () => {
+      setup();
+
+      // input value
+      const newTodoItemValue = '';
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput, newTodoItemValue);
+
+      // assert todo list count before entering
+      // TODO:
+      // expect(addTodoInput).toHaveValue(newTodoItemValue);
+
+      // click enter
+      await userEvent.type(addTodoInput, '{enter}');
+
+      // assert todo list count after entering
+      // TODO:
+      // expect(screen.getByDisplayValue(newTodoItemValue)).not.toBeInTheDocument();
     });
 
     xit('removes a todo item from the list after clicking on the delete button on the same todo item', () => {

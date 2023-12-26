@@ -1,3 +1,6 @@
+import { ChangeEvent, useState } from 'react';
+
+import { Button } from '../Button';
 import { TodoItem, TodoItemMode } from '../TodoItem';
 
 export interface TodoItemType {
@@ -18,10 +21,27 @@ interface TodoListProps {
 export const TodoList = ({
   className = '',
   items,
+  onAddItem,
   onItemValueChange,
   onItemCompletedChange,
   onDeleteItem,
 }: TodoListProps) => {
+  const [newTodoItemValue, setNewTodoItemValue] = useState('');
+
+  const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    // Add item to the list
+    onAddItem(newTodoItemValue);
+
+    // Clear `newTodoItemValue` value
+    setNewTodoItemValue('');
+  };
+
+  const handleNewTodoItemValueChange = (value: string) => {
+    setNewTodoItemValue(value);
+  };
+
   const handleEditItemValue = (id: string) => (value: string) => {
     onItemValueChange(id, value);
   };
@@ -35,21 +55,33 @@ export const TodoList = ({
   };
 
   return (
-    <ul className={className}>
-      {items.map(({ id, value, isCompleted }, index) => (
-        <li key={id}>
-          <TodoItem
-            className={`rounded-none border-b border-todo-item-bottom-border  ${
-              index === 0 ? 'rounded-t-[5px]' : ''
-            }`}
-            mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-            value={value}
-            onEditValue={handleEditItemValue(id)}
-            onToggleCompleted={handleToggleItemCompleted(id)}
-            onDelete={handleDeleteItem(id)}
-          />
-        </li>
-      ))}
-    </ul>
+    <div className={className}>
+      <form onSubmit={handleAddNewTodoItem} className="relative">
+        <TodoItem
+          className="mb-4"
+          mode={TodoItemMode.CREATE}
+          value={newTodoItemValue}
+          onEditValue={handleNewTodoItemValueChange}
+        />
+        {/* Need to add in order for form submission by "enter" key works in Jest env as well */}
+        <Button type="submit" className="absolute left-0 top-0" tabIndex={-1} />
+      </form>
+      <ul>
+        {items.map(({ id, value, isCompleted }, index) => (
+          <li key={id}>
+            <TodoItem
+              className={`rounded-none border-b border-todo-item-bottom-border  ${
+                index === 0 ? 'rounded-t-[5px]' : ''
+              }`}
+              mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+              value={value}
+              onEditValue={handleEditItemValue(id)}
+              onToggleCompleted={handleToggleItemCompleted(id)}
+              onDelete={handleDeleteItem(id)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
