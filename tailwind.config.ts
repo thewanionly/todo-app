@@ -14,6 +14,7 @@ const config: Config = {
         'body-text': 'var(--body-text)',
         'focus-visible-outline': 'var(--focus-visible-outline)',
         'todo-item-bg': 'var(--todo-item-bg)',
+        'todo-item-bottom-border': 'var(--todo-item-bottom-border)',
         'todo-item-toggle-bg': 'var(--todo-item-toggle-bg)',
         'todo-item-toggle-border': 'var(--todo-item-toggle-border)',
         'todo-item-toggle-completed-check-icon': 'var(--todo-item-toggle-completed-check-icon)',
