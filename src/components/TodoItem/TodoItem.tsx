@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Button } from '../Button';
 import { Icon, IconName } from '../Icon';
@@ -94,6 +94,10 @@ const TodoItemInput = ({ value = '', onChange, placeholder, isCompleted }: TodoI
     setInputValue(event.target.value);
     onChange(event.target.value);
   };
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   return (
     <input
