@@ -6,7 +6,7 @@ import { CREATE_TODO_PLACEHOLDER, TodoItem, TodoItemMode } from '.';
 describe('TodoItem', () => {
   describe('Create Mode', () => {
     it('displays an input box with a default value of empty string', () => {
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const inputBox = screen.getByRole('textbox');
 
@@ -14,7 +14,7 @@ describe('TodoItem', () => {
     });
 
     it(`displays an input box with this placeholder: "${CREATE_TODO_PLACEHOLDER}"`, () => {
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const inputBox = screen.getByRole('textbox');
 
@@ -23,7 +23,7 @@ describe('TodoItem', () => {
 
     it(`displays inputted value in input box`, async () => {
       const value = 'test';
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const inputBox = screen.getByRole('textbox');
       await userEvent.type(inputBox, value);
@@ -32,7 +32,7 @@ describe('TodoItem', () => {
     });
 
     it(`displays a circle checkbox that is unticked by default`, () => {
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -41,7 +41,7 @@ describe('TodoItem', () => {
     });
 
     it(`does not tick the circle checkbox when it is clicked`, async () => {
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const checkbox = screen.getByRole('checkbox');
       await userEvent.click(checkbox);
@@ -50,7 +50,7 @@ describe('TodoItem', () => {
     });
 
     it(`does not display a remove icon button`, () => {
-      render(<TodoItem mode={TodoItemMode.CREATE} />);
+      render(<TodoItem mode={TodoItemMode.CREATE} value={''} onEditValue={() => {}} />);
 
       const removeBtn = screen.queryByRole('button', { name: 'remove-button' });
 
@@ -62,7 +62,15 @@ describe('TodoItem', () => {
     const activeModeValue = 'Active mode';
 
     it('displays an input box with a default value equal to the value prop', () => {
-      render(<TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={() => {}} />);
+      render(
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
+      );
 
       const inputBox = screen.getByRole('textbox');
 
@@ -71,7 +79,15 @@ describe('TodoItem', () => {
 
     it(`displays inputted value in input box`, async () => {
       const value = 'test';
-      render(<TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={() => {}} />);
+      render(
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
+      );
 
       const inputBox = screen.getByRole('textbox');
       await userEvent.clear(inputBox);
@@ -81,7 +97,15 @@ describe('TodoItem', () => {
     });
 
     it(`displays a circle checkbox that is unticked by default`, () => {
-      render(<TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={() => {}} />);
+      render(
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
+      );
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -90,7 +114,15 @@ describe('TodoItem', () => {
     });
 
     it(`ticks the circle checkbox when it is clicked`, async () => {
-      render(<TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={() => {}} />);
+      render(
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
+      );
 
       const checkbox = screen.getByRole('checkbox');
       await userEvent.click(checkbox);
@@ -99,7 +131,15 @@ describe('TodoItem', () => {
     });
 
     it(`displays a remove icon button`, () => {
-      render(<TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={() => {}} />);
+      render(
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
+      );
 
       const removeBtn = screen.queryByRole('button', { name: 'remove-button' });
 
@@ -109,7 +149,13 @@ describe('TodoItem', () => {
     it('calls the function passed in the `onDelete` prop when remove icon button is clicked', async () => {
       const onDeleteHandler = jest.fn();
       render(
-        <TodoItem mode={TodoItemMode.ACTIVE} value={activeModeValue} onDelete={onDeleteHandler} />
+        <TodoItem
+          mode={TodoItemMode.ACTIVE}
+          value={activeModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={onDeleteHandler}
+        />
       );
 
       const removeBtn = screen.getByRole('button', { name: 'remove-button' });
@@ -125,7 +171,13 @@ describe('TodoItem', () => {
 
     it('displays an input box with a default value equal to the value prop', () => {
       render(
-        <TodoItem mode={TodoItemMode.COMPLETED} value={completedModeValue} onDelete={() => {}} />
+        <TodoItem
+          mode={TodoItemMode.COMPLETED}
+          value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
       );
 
       const inputBox = screen.getByRole('textbox');
@@ -135,7 +187,13 @@ describe('TodoItem', () => {
 
     it(`disables input box from being editable`, async () => {
       render(
-        <TodoItem mode={TodoItemMode.COMPLETED} value={completedModeValue} onDelete={() => {}} />
+        <TodoItem
+          mode={TodoItemMode.COMPLETED}
+          value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
       );
 
       const inputBox = screen.getByRole('textbox');
@@ -145,7 +203,13 @@ describe('TodoItem', () => {
 
     it(`displays a circle checkbox that is ticked by default`, () => {
       render(
-        <TodoItem mode={TodoItemMode.COMPLETED} value={completedModeValue} onDelete={() => {}} />
+        <TodoItem
+          mode={TodoItemMode.COMPLETED}
+          value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
       );
 
       const checkbox = screen.getByRole('checkbox');
@@ -156,7 +220,13 @@ describe('TodoItem', () => {
 
     it(`unticks the circle checkbox when it is clicked`, async () => {
       render(
-        <TodoItem mode={TodoItemMode.COMPLETED} value={completedModeValue} onDelete={() => {}} />
+        <TodoItem
+          mode={TodoItemMode.COMPLETED}
+          value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
       );
 
       const checkbox = screen.getByRole('checkbox');
@@ -169,7 +239,13 @@ describe('TodoItem', () => {
 
     it(`displays a remove icon button`, () => {
       render(
-        <TodoItem mode={TodoItemMode.COMPLETED} value={completedModeValue} onDelete={() => {}} />
+        <TodoItem
+          mode={TodoItemMode.COMPLETED}
+          value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
+          onDelete={() => {}}
+        />
       );
 
       const removeBtn = screen.queryByRole('button', { name: 'remove-button' });
@@ -183,6 +259,8 @@ describe('TodoItem', () => {
         <TodoItem
           mode={TodoItemMode.COMPLETED}
           value={completedModeValue}
+          onEditValue={() => {}}
+          onToggleCompleted={() => {}}
           onDelete={onDeleteHandler}
         />
       );

@@ -16,17 +16,23 @@ type TodoItemCommonProps = {
 type TodoItemConditionalProps =
   | {
       mode: TodoItemMode.CREATE;
-      value?: never;
+      value: string;
+      onEditValue: (value: string) => void;
+      onToggleCompleted?: never;
       onDelete?: never;
     }
   | {
       mode: TodoItemMode.ACTIVE;
       value: string;
+      onEditValue: (value: string) => void;
+      onToggleCompleted: (value: boolean) => void;
       onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
     }
   | {
       mode: TodoItemMode.COMPLETED;
       value: string;
+      onEditValue: (value: string) => void;
+      onToggleCompleted: (value: boolean) => void;
       onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
     };
 
@@ -34,6 +40,7 @@ type TodoItemProps = TodoItemCommonProps & TodoItemConditionalProps;
 
 type TodoItemInputProps = {
   value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
   isCompleted: boolean;
 };
@@ -80,11 +87,12 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
   );
 };
 
-const TodoItemInput = ({ value = '', placeholder, isCompleted }: TodoItemInputProps) => {
+const TodoItemInput = ({ value = '', onChange, placeholder, isCompleted }: TodoItemInputProps) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+    onChange(event.target.value);
   };
 
   return (
@@ -100,11 +108,19 @@ const TodoItemInput = ({ value = '', placeholder, isCompleted }: TodoItemInputPr
   );
 };
 
-export const TodoItem = ({ className, mode, value, onDelete }: TodoItemProps) => {
+export const TodoItem = ({
+  className,
+  mode,
+  value,
+  onEditValue,
+  onToggleCompleted,
+  onDelete,
+}: TodoItemProps) => {
   const [completed, setCompleted] = useState(mode === TodoItemMode.COMPLETED);
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCompleted(event.target.checked);
+    onToggleCompleted?.(event.target.checked);
   };
 
   return (
@@ -118,6 +134,7 @@ export const TodoItem = ({ className, mode, value, onDelete }: TodoItemProps) =>
       />
       <TodoItemInput
         value={value ?? ''}
+        onChange={onEditValue}
         placeholder={mode === TodoItemMode.CREATE ? CREATE_TODO_PLACEHOLDER : ''}
         isCompleted={completed}
       />

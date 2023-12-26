@@ -11,6 +11,7 @@ type Story = StoryObj<typeof TodoItem>;
 
 const commonArgs = {
   className: 'w-80',
+  onEditValue: () => {},
 };
 
 export const CreateMode: Story = {
