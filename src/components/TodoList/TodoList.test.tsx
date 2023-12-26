@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
@@ -100,7 +100,9 @@ describe('TodoList', () => {
       await userEvent.type(addTodoInput, '{enter}');
 
       // assert inputted value is added in todo list
-      expect(screen.getByDisplayValue(newTodoItemValue)).toBeInTheDocument();
+      const listEl = screen.getByRole('list');
+      const newTodoItem = within(listEl).getByDisplayValue(newTodoItemValue);
+      expect(newTodoItem).toBeInTheDocument();
 
       // assert the todo list count if updated
       expect(
@@ -122,6 +124,11 @@ describe('TodoList', () => {
 
       // click enter
       await userEvent.type(addTodoInput, '{enter}');
+
+      // assert if no empty todo item is added in the list
+      const listEl = screen.getByRole('list');
+      const emptyTodoItem = within(listEl).queryByDisplayValue('');
+      expect(emptyTodoItem).not.toBeInTheDocument();
 
       // assert todo list count after entering
       expect(
