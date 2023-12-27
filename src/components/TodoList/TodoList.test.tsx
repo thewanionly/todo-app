@@ -66,12 +66,30 @@ describe('TodoList', () => {
       // TODO:
     });
 
-    it('displays a button for clearing all completed items', () => {
+    it('displays a button for clearing all completed items if there is at least one completed item', () => {
       setup();
 
       const clearCompletedBtn = screen.getByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
 
       expect(clearCompletedBtn).toBeInTheDocument();
+    });
+
+    it('does not display a button for clearing all completed items if there is no completed item', async () => {
+      setup();
+
+      // untick completed items
+      const completedCheckboxes = screen
+        .getAllByRole<HTMLInputElement>('checkbox')
+        .filter((checkboxEl) => checkboxEl.checked);
+
+      for (const checkboxEl of completedCheckboxes) {
+        await userEvent.click(checkboxEl);
+      }
+
+      // assert clear completed button does not exist
+      const clearCompletedBtn = screen.queryByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
+
+      expect(clearCompletedBtn).not.toBeInTheDocument();
     });
 
     xit(`displays an empty message when there's no todo items`, () => {

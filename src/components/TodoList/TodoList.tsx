@@ -32,6 +32,8 @@ export const TodoList = ({
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
 
+  const hasACompletedItem = items.some(({ isCompleted }) => isCompleted);
+
   const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -100,12 +102,14 @@ export const TodoList = ({
         </ul>
         <div className="flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
           <span className="text-sm text-body-text">{generateTodoListCountText(items.length)}</span>
-          <Button
-            className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
-            onClick={onDeleteCompletedItems}
-          >
-            {CLEAR_COMPLETED_BTN_LABEL}
-          </Button>
+          {hasACompletedItem && (
+            <Button
+              className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
+              onClick={onDeleteCompletedItems}
+            >
+              {CLEAR_COMPLETED_BTN_LABEL}
+            </Button>
+          )}
         </div>
       </div>
     </div>
