@@ -15,6 +15,7 @@ export const TODO_LIST_FILTERS = [
   },
 ];
 
+export const CLEAR_COMPLETED_BTN_LABEL = 'Clear Completed';
 // mocks
 export const MOCKED_TODO_LIST_ITEMS: TodoItemType[] = [
   {

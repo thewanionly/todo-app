@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
+import { CLEAR_COMPLETED_BTN_LABEL } from '.';
 import { Button } from '../Button';
 import { TodoItem, TodoItemMode } from '../TodoItem';
 import { generateTodoListCountText } from './TodoList.utils';
@@ -17,6 +18,7 @@ interface TodoListProps {
   onItemValueChange: (id: string, newValue: string) => void;
   onItemCompletedChange: (id: string, newIsCompleted: boolean) => void;
   onDeleteItem: (id: string) => void;
+  onDeleteCompletedItems: () => void;
 }
 
 export const TodoList = ({
@@ -26,6 +28,7 @@ export const TodoList = ({
   onItemValueChange,
   onItemCompletedChange,
   onDeleteItem,
+  onDeleteCompletedItems,
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
 
@@ -77,25 +80,33 @@ export const TodoList = ({
         {/* Need to add in order for form submission by "enter" key works in Jest env as well */}
         <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
       </form>
-      <ul>
-        {items.map(({ id, value, isCompleted }, index) => (
-          <li key={id}>
-            <TodoItem
-              className={`rounded-none border-b border-todo-item-bottom-border  ${
-                index === 0 ? 'rounded-t-[5px]' : ''
-              }`}
-              mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-              value={value}
-              onEditValue={handleEditItemValue(id)}
-              onInputBlur={handleInputBlur(id)}
-              onToggleCompleted={handleToggleItemCompleted(id)}
-              onDelete={handleDeleteItem(id)}
-            />
-          </li>
-        ))}
-      </ul>
-      <div className="flex gap-3 rounded-b-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow">
-        <span className="text-sm text-body-text">{generateTodoListCountText(items.length)}</span>
+      <div className="shadow-todo-list-box-shadow">
+        <ul>
+          {items.map(({ id, value, isCompleted }, index) => (
+            <li key={id}>
+              <TodoItem
+                className={`rounded-none border-b border-todo-item-bottom-border  ${
+                  index === 0 ? 'rounded-t-[5px]' : ''
+                }`}
+                mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+                value={value}
+                onEditValue={handleEditItemValue(id)}
+                onInputBlur={handleInputBlur(id)}
+                onToggleCompleted={handleToggleItemCompleted(id)}
+                onDelete={handleDeleteItem(id)}
+              />
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
+          <span className="text-sm text-body-text">{generateTodoListCountText(items.length)}</span>
+          <Button
+            className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
+            onClick={onDeleteCompletedItems}
+          >
+            {CLEAR_COMPLETED_BTN_LABEL}
+          </Button>
+        </div>
       </div>
     </div>
   );

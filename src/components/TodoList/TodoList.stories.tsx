@@ -12,8 +12,14 @@ export default meta;
 type Story = StoryObj<typeof TodoList>;
 
 const TodoListContainer = () => {
-  const { items, onAddItem, onItemValueChange, onItemCompletedChange, onDeleteItem } =
-    useTodoList(MOCKED_TODO_LIST_ITEMS);
+  const {
+    items,
+    onAddItem,
+    onItemValueChange,
+    onItemCompletedChange,
+    onDeleteItem,
+    onDeleteCompletedItems,
+  } = useTodoList(MOCKED_TODO_LIST_ITEMS);
 
   return (
     <div className=" p-10">
@@ -24,6 +30,7 @@ const TodoListContainer = () => {
         onItemValueChange={onItemValueChange}
         onItemCompletedChange={onItemCompletedChange}
         onDeleteItem={onDeleteItem}
+        onDeleteCompletedItems={onDeleteCompletedItems}
       />
     </div>
   );

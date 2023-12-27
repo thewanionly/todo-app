@@ -30,11 +30,16 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
     setItems((prevItems) => prevItems.filter(({ id }) => id !== idToRemove));
   };
 
+  const onDeleteCompletedItems = () => {
+    setItems((prevItems) => prevItems.filter(({ isCompleted }) => !isCompleted));
+  };
+
   return {
     items,
     onAddItem,
     onItemValueChange,
     onItemCompletedChange,
     onDeleteItem,
+    onDeleteCompletedItems,
   };
 };

@@ -3,13 +3,19 @@ import userEvent from '@testing-library/user-event';
 
 import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';
-import { MOCKED_TODO_LIST_ITEMS } from './TodoList.constants';
+import { CLEAR_COMPLETED_BTN_LABEL, MOCKED_TODO_LIST_ITEMS } from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
 import { generateTodoListCountText } from './TodoList.utils';
 
 const TodoListSetup = () => {
-  const { items, onAddItem, onItemValueChange, onItemCompletedChange, onDeleteItem } =
-    useTodoList(MOCKED_TODO_LIST_ITEMS);
+  const {
+    items,
+    onAddItem,
+    onItemValueChange,
+    onItemCompletedChange,
+    onDeleteItem,
+    onDeleteCompletedItems,
+  } = useTodoList(MOCKED_TODO_LIST_ITEMS);
 
   return (
     <TodoList
@@ -18,6 +24,7 @@ const TodoListSetup = () => {
       onItemValueChange={onItemValueChange}
       onItemCompletedChange={onItemCompletedChange}
       onDeleteItem={onDeleteItem}
+      onDeleteCompletedItems={onDeleteCompletedItems}
     />
   );
 };
@@ -59,7 +66,15 @@ describe('TodoList', () => {
       // TODO:
     });
 
-    xit('displays a button for clearing all completed items', () => {
+    it('displays a button for clearing all completed items', () => {
+      setup();
+
+      const clearCompletedBtn = screen.getByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
+
+      expect(clearCompletedBtn).toBeInTheDocument();
+    });
+
+    xit(`displays an empty message when there's no todo items`, () => {
       setup();
 
       // TODO:
@@ -277,12 +292,27 @@ describe('TodoList', () => {
       // assert the todo list count as well
     });
 
-    xit('removes all the completed items after "clear completed" button is clicked', () => {
+    it('removes all the completed items after "clear completed" button is clicked', async () => {
       setup();
 
-      // TODO:
+      // assert todo list count before deletion
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+      ).toBeInTheDocument();
 
-      // assert the todo list count as well
+      const clearCompletedBtn = screen.getByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
+
+      // click clear completed button
+      await userEvent.click(clearCompletedBtn);
+
+      // assert todo list count after deletion
+      expect(
+        screen.getByText(
+          generateTodoListCountText(
+            MOCKED_TODO_LIST_ITEMS.filter(({ isCompleted }) => !isCompleted).length
+          )
+        )
+      ).toBeInTheDocument();
     });
   });
 });
