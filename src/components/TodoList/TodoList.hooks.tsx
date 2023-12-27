@@ -17,7 +17,12 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
   };
 
   const onItemValueChange = () => null;
-  const onItemCompletedChange = () => null;
+
+  const onItemCompletedChange = (id: string, value: boolean) => {
+    setItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, isCompleted: value } : item))
+    );
+  };
 
   const onDeleteItem = (idToRemove: string) => {
     setItems((prevItems) => prevItems.filter(({ id }) => id !== idToRemove));

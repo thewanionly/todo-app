@@ -153,10 +153,44 @@ describe('TodoList', () => {
       expect(screen.queryByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).not.toBeInTheDocument();
     });
 
-    xit('marks the todo item as completed after clicking the checkbox toggle in the todo item', () => {
+    it('marks the todo item as completed after clicking the checkbox toggle in the todo item', async () => {
       setup();
 
-      // TODO:
+      const firstItem = screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value);
+
+      // assert that the first item is in the list
+      expect(firstItem).toBeInTheDocument();
+
+      // assert that the first item is not completed
+      const listEl = screen.getByRole('list');
+      const firstCompletedCheckbox = within(listEl).getAllByRole('checkbox')[0];
+      expect(firstCompletedCheckbox).not.toBeChecked();
+
+      // click the completed checkbox in the first todo item
+      await userEvent.click(firstCompletedCheckbox);
+
+      // assert that the first item is completed
+      expect(firstCompletedCheckbox).toBeChecked();
+    });
+
+    it('marks the todo item as not completed after clicking the checkbox toggle in the todo item when it was previously completed', async () => {
+      setup();
+
+      const secondItem = screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[1].value);
+
+      // assert that the first item is in the list
+      expect(secondItem).toBeInTheDocument();
+
+      // assert that the first item is not completed
+      const listEl = screen.getByRole('list');
+      const secondCompletedCheckbox = within(listEl).getAllByRole('checkbox')[1];
+      expect(secondCompletedCheckbox).toBeChecked();
+
+      // click the completed checkbox in the first todo item
+      await userEvent.click(secondCompletedCheckbox);
+
+      // assert that the first item is completed
+      expect(secondCompletedCheckbox).not.toBeChecked();
     });
 
     xit('updates the todo item after clicking the todo item value and inputting in it', () => {
