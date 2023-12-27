@@ -16,7 +16,9 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
     ]);
   };
 
-  const onItemValueChange = () => null;
+  const onItemValueChange = (id: string, value: string) => {
+    setItems((prevItems) => prevItems.map((item) => (item.id === id ? { ...item, value } : item)));
+  };
 
   const onItemCompletedChange = (id: string, value: boolean) => {
     setItems((prevItems) =>

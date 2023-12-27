@@ -110,6 +110,7 @@ const TodoItemInput = ({ value = '', onChange, placeholder, isCompleted }: TodoI
       value={inputValue}
       onChange={handleInputChange}
       disabled={isCompleted}
+      data-value={value}
     />
   );
 };

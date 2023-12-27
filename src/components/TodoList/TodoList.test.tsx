@@ -188,25 +188,37 @@ describe('TodoList', () => {
 
       const secondItem = screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[1].value);
 
-      // assert that the first item is in the list
+      // assert that the second item is in the list
       expect(secondItem).toBeInTheDocument();
 
-      // assert that the first item is not completed
+      // assert that the second item is not completed
       const listEl = screen.getByRole('list');
       const secondCompletedCheckbox = within(listEl).getAllByRole('checkbox')[1];
       expect(secondCompletedCheckbox).toBeChecked();
 
-      // click the completed checkbox in the first todo item
+      // click the completed checkbox in the second todo item
       await userEvent.click(secondCompletedCheckbox);
 
-      // assert that the first item is completed
+      // assert that the second item is completed
       expect(secondCompletedCheckbox).not.toBeChecked();
     });
 
-    xit('updates the todo item after clicking the todo item value and inputting in it', () => {
+    it('updates the todo item after clicking the todo item value and inputting in it', async () => {
       setup();
 
-      // TODO:
+      // assert the first item's value
+      const listEl = screen.getByRole('list');
+      const firstItemInput = within(listEl).getAllByRole('textbox')[0];
+      expect(firstItemInput).toHaveValue(MOCKED_TODO_LIST_ITEMS[0].value);
+
+      // update the todo item value
+      const newValue = 'test';
+      await userEvent.clear(firstItemInput);
+      await userEvent.type(firstItemInput, newValue);
+
+      // assert that the value has changed
+      expect(firstItemInput).toHaveValue(newValue);
+      expect(firstItemInput).toHaveAttribute('data-value', newValue);
     });
 
     xit('deletes the todo item when value is updated to an empty string and input loses focus', () => {
