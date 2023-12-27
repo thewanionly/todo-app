@@ -175,12 +175,14 @@ describe('TodoList', () => {
       const listEl = screen.getByRole('list');
       const firstCompletedCheckbox = within(listEl).getAllByRole('checkbox')[0];
       expect(firstCompletedCheckbox).not.toBeChecked();
+      expect(firstCompletedCheckbox).toHaveAttribute('data-checked', 'false');
 
       // click the completed checkbox in the first todo item
       await userEvent.click(firstCompletedCheckbox);
 
       // assert that the first item is completed
       expect(firstCompletedCheckbox).toBeChecked();
+      expect(firstCompletedCheckbox).toHaveAttribute('data-checked', 'true');
     });
 
     it('marks the todo item as not completed after clicking the checkbox toggle in the todo item when it was previously completed', async () => {
@@ -195,12 +197,14 @@ describe('TodoList', () => {
       const listEl = screen.getByRole('list');
       const secondCompletedCheckbox = within(listEl).getAllByRole('checkbox')[1];
       expect(secondCompletedCheckbox).toBeChecked();
+      expect(secondCompletedCheckbox).toHaveAttribute('data-checked', 'true');
 
       // click the completed checkbox in the second todo item
       await userEvent.click(secondCompletedCheckbox);
 
       // assert that the second item is completed
       expect(secondCompletedCheckbox).not.toBeChecked();
+      expect(secondCompletedCheckbox).toHaveAttribute('data-checked', 'false');
     });
 
     it('updates the todo item after clicking the todo item value and inputting in it', async () => {
@@ -210,6 +214,7 @@ describe('TodoList', () => {
       const listEl = screen.getByRole('list');
       const firstItemInput = within(listEl).getAllByRole('textbox')[0];
       expect(firstItemInput).toHaveValue(MOCKED_TODO_LIST_ITEMS[0].value);
+      expect(firstItemInput).toHaveAttribute('data-value', MOCKED_TODO_LIST_ITEMS[0].value);
 
       // update the todo item value
       const newValue = 'test';

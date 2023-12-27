@@ -65,6 +65,7 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
         checked={checked}
         onChange={onChange}
         disabled={disabled}
+        data-checked={checked}
       />
       <span
         className={`${disabled ? 'pointer-events-none' : 'pointer-events-auto'} ${
