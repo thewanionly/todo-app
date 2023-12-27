@@ -139,6 +139,11 @@ describe('TodoList', () => {
     it('removes a todo item from the list after clicking on the delete button on the same todo item', async () => {
       setup();
 
+      // assert todo list count before deleting
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+      ).toBeInTheDocument();
+
       // assert that the first item is in the list
       expect(screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).toBeInTheDocument();
 
@@ -151,6 +156,11 @@ describe('TodoList', () => {
 
       // assert that the first item is removed from the list
       expect(screen.queryByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).not.toBeInTheDocument();
+
+      // assert todo list count after deleting
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length - 1))
+      ).toBeInTheDocument();
     });
 
     it('marks the todo item as completed after clicking the checkbox toggle in the todo item', async () => {
