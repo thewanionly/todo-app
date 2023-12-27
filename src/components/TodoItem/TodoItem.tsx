@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useId, useState } from 'react';
 
 import { Button } from '../Button';
 import { Icon, IconName } from '../Icon';
@@ -54,11 +54,13 @@ type TodoItemCheckboxProps = {
 export const CREATE_TODO_PLACEHOLDER = 'Create a new todo...';
 
 const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheckboxProps) => {
+  const checkboxId = useId();
+
   return (
-    <label htmlFor="todo-item-checkbox" className="flex items-center">
+    <label htmlFor={checkboxId} className="flex items-center">
       <input
         type="checkbox"
-        id="todo-item-checkbox"
+        id={checkboxId}
         className="peer appearance-none focus-visible:outline-0"
         checked={checked}
         onChange={onChange}
