@@ -3,11 +3,15 @@ import userEvent from '@testing-library/user-event';
 
 import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';
-import { CLEAR_COMPLETED_BTN_LABEL, MOCKED_TODO_LIST_ITEMS } from './TodoList.constants';
+import {
+  CLEAR_COMPLETED_BTN_LABEL,
+  EMPTY_TODO_LIST_MESSAGE,
+  MOCKED_TODO_LIST_ITEMS,
+} from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
 import { generateTodoListCountText } from './TodoList.utils';
 
-const TodoListSetup = () => {
+const TodoListSetup = ({ isEmptyList = false }: { isEmptyList?: boolean }) => {
   const {
     items,
     onAddItem,
@@ -15,7 +19,7 @@ const TodoListSetup = () => {
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
-  } = useTodoList(MOCKED_TODO_LIST_ITEMS);
+  } = useTodoList(isEmptyList ? [] : MOCKED_TODO_LIST_ITEMS);
 
   return (
     <TodoList
@@ -29,8 +33,12 @@ const TodoListSetup = () => {
   );
 };
 
-const setup = () => {
-  render(<TodoListSetup />);
+type SetupOptions = {
+  showEmptyList?: boolean;
+};
+
+const setup = ({ showEmptyList = false }: SetupOptions = {}) => {
+  render(<TodoListSetup isEmptyList={showEmptyList} />);
 };
 
 describe('TodoList', () => {
@@ -74,28 +82,11 @@ describe('TodoList', () => {
       expect(clearCompletedBtn).toBeInTheDocument();
     });
 
-    it('does not display a button for clearing all completed items if there is no completed item', async () => {
-      setup();
+    it(`displays an empty message when there's no todo items`, () => {
+      setup({ showEmptyList: true });
 
-      // untick completed items
-      const completedCheckboxes = screen
-        .getAllByRole<HTMLInputElement>('checkbox')
-        .filter((checkboxEl) => checkboxEl.checked);
-
-      for (const checkboxEl of completedCheckboxes) {
-        await userEvent.click(checkboxEl);
-      }
-
-      // assert clear completed button does not exist
-      const clearCompletedBtn = screen.queryByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
-
-      expect(clearCompletedBtn).not.toBeInTheDocument();
-    });
-
-    xit(`displays an empty message when there's no todo items`, () => {
-      setup();
-
-      // TODO:
+      const emptyMessage = screen.getByText(EMPTY_TODO_LIST_MESSAGE);
+      expect(emptyMessage).toBeInTheDocument();
     });
   });
 
@@ -302,12 +293,24 @@ describe('TodoList', () => {
       // assert the todo list count as well
     });
 
+    xit(`displays a "no active todo items" message when there's no active todo items`, () => {
+      setup();
+
+      // TODO:
+    });
+
     xit('updates the todo list to show the completed todo list items after clicking the "Completed" filter', () => {
       setup();
 
       // TODO:
 
       // assert the todo list count as well
+    });
+
+    xit(`displays a "no completed todo items" message when there's no completed todo items`, () => {
+      setup();
+
+      // TODO:
     });
 
     it('removes all the completed items after "clear completed" button is clicked', async () => {
@@ -331,6 +334,24 @@ describe('TodoList', () => {
           )
         )
       ).toBeInTheDocument();
+    });
+
+    it('does not display a button for clearing all completed items if there is no completed item', async () => {
+      setup();
+
+      // untick completed items
+      const completedCheckboxes = screen
+        .getAllByRole<HTMLInputElement>('checkbox')
+        .filter((checkboxEl) => checkboxEl.checked);
+
+      for (const checkboxEl of completedCheckboxes) {
+        await userEvent.click(checkboxEl);
+      }
+
+      // assert clear completed button does not exist
+      const clearCompletedBtn = screen.queryByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
+
+      expect(clearCompletedBtn).not.toBeInTheDocument();
     });
   });
 });

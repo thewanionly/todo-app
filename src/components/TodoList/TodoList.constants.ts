@@ -16,6 +16,10 @@ export const TODO_LIST_FILTERS = [
 ];
 
 export const CLEAR_COMPLETED_BTN_LABEL = 'Clear Completed';
+export const EMPTY_TODO_LIST_MESSAGE = 'You have no todo items.';
+export const NO_ACTIVE_TODO_ITEMS_MESSAGE = 'You have no active todo items.';
+export const NO_COMPLETED_TODO_ITEMS_MESSAGE = 'You have no completed todo items.';
+
 // mocks
 export const MOCKED_TODO_LIST_ITEMS: TodoItemType[] = [
   {

@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-import { CLEAR_COMPLETED_BTN_LABEL } from '.';
+import { CLEAR_COMPLETED_BTN_LABEL, EMPTY_TODO_LIST_MESSAGE } from '.';
 import { Button } from '../Button';
 import { TodoItem, TodoItemMode } from '../TodoItem';
 import { generateTodoListCountText } from './TodoList.utils';
@@ -32,6 +32,7 @@ export const TodoList = ({
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
 
+  const isEmptyList = items.length === 0;
   const hasACompletedItem = items.some(({ isCompleted }) => isCompleted);
 
   const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
@@ -83,34 +84,45 @@ export const TodoList = ({
         <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
       </form>
       <div className="shadow-todo-list-box-shadow">
-        <ul>
-          {items.map(({ id, value, isCompleted }, index) => (
-            <li key={id}>
-              <TodoItem
-                className={`rounded-none border-b border-todo-item-bottom-border  ${
-                  index === 0 ? 'rounded-t-[5px]' : ''
-                }`}
-                mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-                value={value}
-                onEditValue={handleEditItemValue(id)}
-                onInputBlur={handleInputBlur(id)}
-                onToggleCompleted={handleToggleItemCompleted(id)}
-                onDelete={handleDeleteItem(id)}
-              />
-            </li>
-          ))}
-        </ul>
-        <div className="flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
-          <span className="text-sm text-body-text">{generateTodoListCountText(items.length)}</span>
-          {hasACompletedItem && (
-            <Button
-              className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
-              onClick={onDeleteCompletedItems}
-            >
-              {CLEAR_COMPLETED_BTN_LABEL}
-            </Button>
-          )}
-        </div>
+        {!isEmptyList && (
+          <ul>
+            {items.map(({ id, value, isCompleted }, index) => (
+              <li key={id}>
+                <TodoItem
+                  className={`rounded-none border-b border-todo-item-bottom-border  ${
+                    index === 0 ? 'rounded-t-[5px]' : ''
+                  }`}
+                  mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+                  value={value}
+                  onEditValue={handleEditItemValue(id)}
+                  onInputBlur={handleInputBlur(id)}
+                  onToggleCompleted={handleToggleItemCompleted(id)}
+                  onDelete={handleDeleteItem(id)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {isEmptyList ? (
+          <div className="flex items-center justify-center rounded-[5px] bg-todo-list-bg px-5 py-9 text-sm text-body-text">
+            {EMPTY_TODO_LIST_MESSAGE}
+          </div>
+        ) : (
+          <div className="flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
+            <span className="text-sm text-body-text">
+              {generateTodoListCountText(items.length)}
+            </span>
+            {hasACompletedItem && (
+              <Button
+                className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
+                onClick={onDeleteCompletedItems}
+              >
+                {CLEAR_COMPLETED_BTN_LABEL}
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
