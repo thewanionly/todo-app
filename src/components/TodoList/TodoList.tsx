@@ -50,6 +50,13 @@ export const TodoList = ({
     onItemValueChange(id, value);
   };
 
+  const handleInputBlur = (id: string) => (value: string) => {
+    if (value) return;
+
+    // remove item if value is empty on input blur
+    onDeleteItem(id);
+  };
+
   const handleToggleItemCompleted = (id: string) => (isCompleted: boolean) => {
     onItemCompletedChange(id, isCompleted);
   };
@@ -80,6 +87,7 @@ export const TodoList = ({
               mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
               value={value}
               onEditValue={handleEditItemValue(id)}
+              onInputBlur={handleInputBlur(id)}
               onToggleCompleted={handleToggleItemCompleted(id)}
               onDelete={handleDeleteItem(id)}
             />

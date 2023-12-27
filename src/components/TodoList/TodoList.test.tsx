@@ -226,12 +226,31 @@ describe('TodoList', () => {
       expect(firstItemInput).toHaveAttribute('data-value', newValue);
     });
 
-    xit('deletes the todo item when value is updated to an empty string and input loses focus', () => {
+    it('deletes the todo item when value is updated to an empty string and input loses focus', async () => {
       setup();
 
-      // TODO:
+      // assert todo list count before deletion
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+      ).toBeInTheDocument();
 
-      // assert the todo list count as well
+      // assert the first item's value
+      const listEl = screen.getByRole('list');
+      const firstItemInput = within(listEl).getAllByRole('textbox')[0];
+      expect(firstItemInput).toHaveValue(MOCKED_TODO_LIST_ITEMS[0].value);
+      expect(firstItemInput).toHaveAttribute('data-value', MOCKED_TODO_LIST_ITEMS[0].value);
+
+      // remove the first item by clearing the value and going out of focus
+      await userEvent.clear(firstItemInput);
+      await userEvent.click(document.body); // simulate going out of focus by clicking the body
+
+      // assert that the first item is removed from the list
+      expect(screen.queryByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).not.toBeInTheDocument();
+
+      // assert todo list count after deletion
+      expect(
+        screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length - 1))
+      ).toBeInTheDocument();
     });
 
     xit('updates the todo list to show all todo list items by default', () => {

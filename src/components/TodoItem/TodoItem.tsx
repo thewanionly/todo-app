@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useId, useState } from 'react';
+import { ChangeEvent, FocusEvent, useEffect, useId, useState } from 'react';
 
 import { Button } from '../Button';
 import { Icon, IconName } from '../Icon';
@@ -11,6 +11,7 @@ export enum TodoItemMode {
 
 type TodoItemCommonProps = {
   className?: string;
+  onInputBlur?: (value: string) => void;
 };
 
 type TodoItemConditionalProps =
@@ -41,6 +42,7 @@ type TodoItemProps = TodoItemCommonProps & TodoItemConditionalProps;
 type TodoItemInputProps = {
   value: string;
   onChange: (value: string) => void;
+  onBlur?: (value: string) => void;
   placeholder?: string;
   isCompleted: boolean;
 };
@@ -90,12 +92,22 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
   );
 };
 
-const TodoItemInput = ({ value = '', onChange, placeholder, isCompleted }: TodoItemInputProps) => {
+const TodoItemInput = ({
+  value = '',
+  onChange,
+  onBlur,
+  placeholder,
+  isCompleted,
+}: TodoItemInputProps) => {
   const [inputValue, setInputValue] = useState(value);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
     onChange(event.target.value);
+  };
+
+  const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+    onBlur?.(event.target.value);
   };
 
   useEffect(() => {
@@ -110,6 +122,7 @@ const TodoItemInput = ({ value = '', onChange, placeholder, isCompleted }: TodoI
       placeholder={placeholder}
       value={inputValue}
       onChange={handleInputChange}
+      onBlur={handleInputBlur}
       disabled={isCompleted}
       data-value={value}
     />
@@ -121,6 +134,7 @@ export const TodoItem = ({
   mode,
   value,
   onEditValue,
+  onInputBlur,
   onToggleCompleted,
   onDelete,
 }: TodoItemProps) => {
@@ -145,6 +159,7 @@ export const TodoItem = ({
       <TodoItemInput
         value={value ?? ''}
         onChange={onEditValue}
+        onBlur={onInputBlur}
         placeholder={mode === TodoItemMode.CREATE ? CREATE_TODO_PLACEHOLDER : ''}
         isCompleted={completed}
       />
