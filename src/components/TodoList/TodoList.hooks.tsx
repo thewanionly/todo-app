@@ -18,7 +18,10 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
 
   const onItemValueChange = () => null;
   const onItemCompletedChange = () => null;
-  const onDeleteItem = () => null;
+
+  const onDeleteItem = (idToRemove: string) => {
+    setItems((prevItems) => prevItems.filter(({ id }) => id !== idToRemove));
+  };
 
   return {
     items,

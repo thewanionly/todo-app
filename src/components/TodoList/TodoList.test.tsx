@@ -136,12 +136,21 @@ describe('TodoList', () => {
       ).toBeInTheDocument();
     });
 
-    xit('removes a todo item from the list after clicking on the delete button on the same todo item', () => {
+    it('removes a todo item from the list after clicking on the delete button on the same todo item', async () => {
       setup();
 
-      // TODO:
+      // assert that the first item is in the list
+      expect(screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).toBeInTheDocument();
 
-      // assert the todo list count as well
+      // click the delete button in the first todo item
+      const listEl = screen.getByRole('list');
+      const firstRemoveButton = within(listEl).getAllByRole('button', { name: 'remove-button' })[0];
+      expect(firstRemoveButton).toBeInTheDocument();
+
+      await userEvent.click(firstRemoveButton);
+
+      // assert that the first item is removed from the list
+      expect(screen.queryByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).not.toBeInTheDocument();
     });
 
     xit('marks the todo item as completed after clicking the checkbox toggle in the todo item', () => {
