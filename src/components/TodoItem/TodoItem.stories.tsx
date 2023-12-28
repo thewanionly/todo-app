@@ -10,7 +10,7 @@ export default meta;
 type Story = StoryObj<typeof TodoItem>;
 
 const commonArgs = {
-  className: 'w-80',
+  className: 'min-w-[300px] max-w-lg',
   onEditValue: () => {},
 };
 

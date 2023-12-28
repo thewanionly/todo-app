@@ -7,6 +7,7 @@ import {
   CLEAR_COMPLETED_BTN_LABEL,
   EMPTY_TODO_LIST_MESSAGE,
   MOCKED_TODO_LIST_ITEMS,
+  TODO_LIST_FILTERS,
 } from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
 import { generateTodoListCountText } from './TodoList.utils';
@@ -68,10 +69,13 @@ describe('TodoList', () => {
       expect(todoListCount).toBeInTheDocument();
     });
 
-    xit('displays the todo list filter buttons', () => {
+    it('displays the todo list filter buttons', () => {
       setup();
 
-      // TODO:
+      TODO_LIST_FILTERS.forEach(({ label }) => {
+        const filterBtn = screen.getByRole('button', { name: label });
+        expect(filterBtn).toBeInTheDocument();
+      });
     });
 
     it('displays a button for clearing all completed items if there is at least one completed item', () => {
@@ -124,7 +128,7 @@ describe('TodoList', () => {
       await userEvent.type(addTodoInput, '{enter}');
 
       // assert inputted value is added in todo list
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const newTodoItem = within(listEl).getByDisplayValue(newTodoItemValue);
       expect(newTodoItem).toBeInTheDocument();
 
@@ -150,7 +154,7 @@ describe('TodoList', () => {
       await userEvent.type(addTodoInput, '{enter}');
 
       // assert if no empty todo item is added in the list
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const emptyTodoItem = within(listEl).queryByDisplayValue('');
       expect(emptyTodoItem).not.toBeInTheDocument();
 
@@ -172,7 +176,7 @@ describe('TodoList', () => {
       expect(screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).toBeInTheDocument();
 
       // click the delete button in the first todo item
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const firstRemoveButton = within(listEl).getAllByRole('button', { name: 'remove-button' })[0];
       expect(firstRemoveButton).toBeInTheDocument();
 
@@ -196,7 +200,7 @@ describe('TodoList', () => {
       expect(firstItem).toBeInTheDocument();
 
       // assert that the first item is not completed
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const firstCompletedCheckbox = within(listEl).getAllByRole('checkbox')[0];
       expect(firstCompletedCheckbox).not.toBeChecked();
       expect(firstCompletedCheckbox).toHaveAttribute('data-checked', 'false');
@@ -218,7 +222,7 @@ describe('TodoList', () => {
       expect(secondItem).toBeInTheDocument();
 
       // assert that the second item is not completed
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const secondCompletedCheckbox = within(listEl).getAllByRole('checkbox')[1];
       expect(secondCompletedCheckbox).toBeChecked();
       expect(secondCompletedCheckbox).toHaveAttribute('data-checked', 'true');
@@ -235,7 +239,7 @@ describe('TodoList', () => {
       setup();
 
       // assert the first item's value
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const firstItemInput = within(listEl).getAllByRole('textbox')[0];
       expect(firstItemInput).toHaveValue(MOCKED_TODO_LIST_ITEMS[0].value);
       expect(firstItemInput).toHaveAttribute('data-value', MOCKED_TODO_LIST_ITEMS[0].value);
@@ -259,7 +263,7 @@ describe('TodoList', () => {
       ).toBeInTheDocument();
 
       // assert the first item's value
-      const listEl = screen.getByRole('list');
+      const listEl = screen.getByRole('list', { name: 'todo list' });
       const firstItemInput = within(listEl).getAllByRole('textbox')[0];
       expect(firstItemInput).toHaveValue(MOCKED_TODO_LIST_ITEMS[0].value);
       expect(firstItemInput).toHaveAttribute('data-value', MOCKED_TODO_LIST_ITEMS[0].value);

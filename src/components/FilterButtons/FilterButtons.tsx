@@ -29,6 +29,7 @@ export const FilterButtons = ({
 
   return (
     <ul
+      aria-label="filter buttons list"
       className={`flex items-center justify-center gap-5 rounded-[5px] bg-todo-item-bg px-5 py-3.5 shadow-todo-item-box-shadow ${className}`}
     >
       {filters.map(({ label, value }) => (

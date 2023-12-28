@@ -130,7 +130,7 @@ const TodoItemInput = ({
 };
 
 export const TodoItem = ({
-  className,
+  className = '',
   mode,
   value,
   onEditValue,

@@ -22,9 +22,9 @@ const TodoListContainer = () => {
   } = useTodoList(MOCKED_TODO_LIST_ITEMS);
 
   return (
-    <div className=" p-10">
+    <div className="p-10">
       <TodoList
-        className="w-80"
+        className="min-w-[300px] max-w-lg"
         items={items}
         onAddItem={onAddItem}
         onItemValueChange={onItemValueChange}
