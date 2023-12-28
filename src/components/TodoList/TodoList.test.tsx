@@ -8,6 +8,7 @@ import {
   EMPTY_TODO_LIST_MESSAGE,
   MOCKED_TODO_LIST_ITEMS,
   TODO_LIST_FILTERS,
+  TODO_LIST_FILTERS_MAP,
 } from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
 import { generateTodoListCountText } from './TodoList.utils';
@@ -281,20 +282,41 @@ describe('TodoList', () => {
       ).toBeInTheDocument();
     });
 
-    xit('updates the todo list to show all todo list items by default', () => {
+    it('shows all todo list items by default', () => {
       setup();
 
-      // TODO:
-
-      // assert the todo list count as well
+      // assert that all todo items are present
+      MOCKED_TODO_LIST_ITEMS.forEach(({ value }) => {
+        const todoItem = screen.getByDisplayValue(value);
+        expect(todoItem).toBeInTheDocument();
+      });
     });
 
-    xit('updates the todo list to show active todo list items after clicking the "Active" filter', () => {
+    it('updates the todo list to show active todo list items after clicking the "Active" filter', async () => {
       setup();
 
-      // TODO:
+      // assert that all todo items are present before filtering
+      MOCKED_TODO_LIST_ITEMS.forEach(({ value }) => {
+        const todoItem = screen.getByDisplayValue(value);
+        expect(todoItem).toBeInTheDocument();
+      });
 
-      // assert the todo list count as well
+      // click on the active filter
+      const activeFilterBtn = screen.getByRole('button', {
+        name: TODO_LIST_FILTERS_MAP.active.label,
+      });
+      await userEvent.click(activeFilterBtn);
+
+      // assert that only active items are present
+      MOCKED_TODO_LIST_ITEMS.forEach(({ value, isCompleted }) => {
+        const todoItem = screen.queryByDisplayValue(value);
+
+        if (isCompleted) {
+          expect(todoItem).not.toBeInTheDocument();
+        } else {
+          expect(todoItem).toBeInTheDocument();
+        }
+      });
     });
 
     xit(`displays a "no active todo items" message when there's no active todo items`, () => {

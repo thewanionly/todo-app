@@ -1,19 +1,21 @@
 import { TodoItemType } from './TodoList';
 
-export const TODO_LIST_FILTERS = [
-  {
+export const TODO_LIST_FILTERS_MAP = {
+  all: {
     label: 'All',
     value: 'all',
   },
-  {
+  active: {
     label: 'Active',
     value: 'active',
   },
-  {
+  completed: {
     label: 'Completed',
     value: 'completed',
   },
-];
+};
+
+export const TODO_LIST_FILTERS = Object.values(TODO_LIST_FILTERS_MAP);
 
 export const CLEAR_COMPLETED_BTN_LABEL = 'Clear Completed';
 export const EMPTY_TODO_LIST_MESSAGE = 'You have no todo items.';

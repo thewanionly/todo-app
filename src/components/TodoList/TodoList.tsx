@@ -4,7 +4,7 @@ import { CLEAR_COMPLETED_BTN_LABEL, EMPTY_TODO_LIST_MESSAGE, TODO_LIST_FILTERS }
 import { Button } from '../Button';
 import { FilterButtons } from '../FilterButtons';
 import { TodoItem, TodoItemMode } from '../TodoItem';
-import { generateTodoListCountText } from './TodoList.utils';
+import { filterTodoList, generateTodoListCountText } from './TodoList.utils';
 
 export interface TodoItemType {
   id: string;
@@ -32,9 +32,11 @@ export const TodoList = ({
   onDeleteCompletedItems,
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
+  const [currentFilter, setCurrentFilter] = useState(TODO_LIST_FILTERS[0].value);
 
   const isEmptyList = items.length === 0;
   const hasACompletedItem = items.some(({ isCompleted }) => isCompleted);
+  const filteredItems = filterTodoList(items, currentFilter);
 
   const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,6 +74,10 @@ export const TodoList = ({
     onDeleteItem(id);
   };
 
+  const handleFilterChange = (value: string) => {
+    setCurrentFilter(value);
+  };
+
   return (
     <div className={className}>
       <form onSubmit={handleAddNewTodoItem} className="relative">
@@ -92,7 +98,7 @@ export const TodoList = ({
         ) : (
           <>
             <ul aria-label="todo list">
-              {items.map(({ id, value, isCompleted }, index) => (
+              {filteredItems.map(({ id, value, isCompleted }, index) => (
                 <li key={id}>
                   <TodoItem
                     className={`rounded-none border-b border-todo-item-bottom-border  ${
@@ -115,6 +121,8 @@ export const TodoList = ({
               <FilterButtons
                 className="absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none"
                 filters={TODO_LIST_FILTERS}
+                defaultFilter={currentFilter}
+                onSelectFilter={handleFilterChange}
               />
               {hasACompletedItem && (
                 <Button
