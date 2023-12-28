@@ -24,7 +24,7 @@ const TodoListContainer = () => {
   return (
     <div className="p-10">
       <TodoList
-        className="min-w-[300px] max-w-lg"
+        className="min-w-[300px] max-w-xl"
         items={items}
         onAddItem={onAddItem}
         onItemValueChange={onItemValueChange}

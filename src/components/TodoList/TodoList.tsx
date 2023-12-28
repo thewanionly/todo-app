@@ -108,10 +108,14 @@ export const TodoList = ({
                 </li>
               ))}
             </ul>
-            <div className="flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
+            <div className="relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
               <span className="text-sm text-body-text">
                 {generateTodoListCountText(items.length)}
               </span>
+              <FilterButtons
+                className="absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none"
+                filters={TODO_LIST_FILTERS}
+              />
               {hasACompletedItem && (
                 <Button
                   className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
@@ -124,7 +128,6 @@ export const TodoList = ({
           </>
         )}
       </div>
-      {!isEmptyList && <FilterButtons className="mt-4" filters={TODO_LIST_FILTERS} />}
     </div>
   );
 };
