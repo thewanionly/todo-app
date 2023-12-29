@@ -62,6 +62,11 @@ export const TodoList = ({
 
     // Clear `newTodoItemValue` value
     setNewTodoItemValue('');
+
+    // Set `currentFilter` to "all" when adding a new item under "completed" `currentFilter`
+    if (currentFilter === TODO_LIST_FILTERS_MAP.completed.value) {
+      setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value as TodoListFilterValues);
+    }
   };
 
   const handleNewTodoItemValueChange = (value: string) => {
@@ -88,7 +93,6 @@ export const TodoList = ({
   };
 
   const handleDeleteCompletedItems = () => {
-    setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value as TodoListFilterValues);
     onDeleteCompletedItems();
   };
 

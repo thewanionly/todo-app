@@ -167,6 +167,30 @@ describe('TodoList', () => {
       ).toBeInTheDocument();
     });
 
+    it('sets the current filter to "all" when current filter is "completed" and user adds a new todo item', async () => {
+      setup();
+
+      // click on the completed filter
+      const completedFilterBtn = screen.getByRole('button', {
+        name: TODO_LIST_FILTERS_MAP.completed.label,
+      });
+      await userEvent.click(completedFilterBtn);
+
+      // input value
+      const newTodoItemValue = 'New value test';
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput, newTodoItemValue);
+
+      // click enter
+      await userEvent.type(addTodoInput, '{enter}');
+
+      // assert that current filter is "all"
+      [newTodoItemValue, ...MOCKED_TODO_LIST_ITEMS.map(({ value }) => value)].forEach((value) => {
+        const todoItem = screen.getByDisplayValue(value);
+        expect(todoItem).toBeInTheDocument();
+      });
+    });
+
     it('removes a todo item from the list after clicking on the delete button on the same todo item', async () => {
       setup();
 
