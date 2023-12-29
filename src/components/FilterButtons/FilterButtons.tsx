@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '../Button';
 
@@ -26,6 +26,10 @@ export const FilterButtons = ({
     setSelectedFilter(value);
     onSelectFilter?.(value);
   };
+
+  useEffect(() => {
+    setSelectedFilter(defaultFilter);
+  }, [defaultFilter]);
 
   return (
     <ul
