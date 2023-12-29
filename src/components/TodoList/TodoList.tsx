@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
+import { twMerge } from 'tailwind-merge';
+
 import {
   CLEAR_COMPLETED_BTN_LABEL,
   EMPTY_MESSAGE_MAP,
@@ -42,9 +44,9 @@ export const TodoList = ({
     TODO_LIST_FILTERS[0].value as TodoListFilterValues
   );
 
-  const hasACompletedItem = items.some(({ isCompleted }) => isCompleted);
   const filteredItems = filterTodoList(items, currentFilter);
 
+  const showClearCompletedBtn = filteredItems.some(({ isCompleted }) => isCompleted);
   const isEmptyList = items.length === 0;
   const showEmptyMessage = isEmptyList || filteredItems.length === 0;
   const emptyMessage = EMPTY_MESSAGE_MAP[currentFilter];
@@ -106,9 +108,15 @@ export const TodoList = ({
         {/* Need to add in order for form submission by "enter" key works in Jest env as well */}
         <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
       </form>
-      <div className="shadow-todo-list-box-shadow">
+      <div className="rounded-[5px] shadow-todo-list-box-shadow">
         {showEmptyMessage && (
-          <div className="flex items-center justify-center rounded-[5px] bg-todo-list-bg px-5 py-9 text-sm text-body-text">
+          <div
+            className={twMerge(
+              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg text-sm text-body-text ${
+                !isEmptyList ? 'md:rounded-b-none' : ''
+              }`
+            )}
+          >
             {emptyMessage}
           </div>
         )}
@@ -134,20 +142,28 @@ export const TodoList = ({
               </ul>
             )}
             <div
-              className={`relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5  ${
-                showEmptyMessage ? 'border-t border-todo-item-bottom-border' : ''
-              }`}
+              className={twMerge(
+                `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5 ${
+                  showEmptyMessage
+                    ? 'h-0 p-0 md:h-auto md:border-t md:border-todo-item-bottom-border md:px-5 md:py-3.5'
+                    : ''
+                }`
+              )}
             >
               <span className={`text-sm text-body-text ${showEmptyMessage ? 'invisible' : ''}`}>
                 {generateTodoListCountText(items.length)}
               </span>
               <FilterButtons
-                className="absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none"
+                className={twMerge(
+                  `absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none ${
+                    showEmptyMessage ? 'mt-4' : ''
+                  }`
+                )}
                 filters={TODO_LIST_FILTERS}
                 defaultFilter={currentFilter}
                 onSelectFilter={handleFilterChange}
               />
-              {hasACompletedItem && (
+              {showClearCompletedBtn && (
                 <Button
                   className={`p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover ${
                     showEmptyMessage ? 'invisible' : ''
