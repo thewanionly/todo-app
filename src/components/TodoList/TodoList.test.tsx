@@ -388,7 +388,7 @@ describe('TodoList', () => {
           expect(todoItem).toBeInTheDocument();
         });
 
-        // click on the active filter
+        // click on the completed filter
         const completedFilterBtn = screen.getByRole('button', {
           name: TODO_LIST_FILTERS_MAP.completed.label,
         });
@@ -465,6 +465,21 @@ describe('TodoList', () => {
         for (const checkboxEl of completedCheckboxes) {
           await userEvent.click(checkboxEl);
         }
+
+        // assert clear completed button does not exist
+        const clearCompletedBtn = screen.queryByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
+
+        expect(clearCompletedBtn).not.toBeInTheDocument();
+      });
+
+      it('does not display a button for clearing all completed items if current filter is "active"', async () => {
+        setup();
+
+        // click on the active filter
+        const activeFilterBtn = screen.getByRole('button', {
+          name: TODO_LIST_FILTERS_MAP.active.label,
+        });
+        await userEvent.click(activeFilterBtn);
 
         // assert clear completed button does not exist
         const clearCompletedBtn = screen.queryByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
