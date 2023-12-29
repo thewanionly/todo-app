@@ -442,6 +442,24 @@ describe('TodoList', () => {
         );
         expect(activeItemsCount).toBeInTheDocument();
       });
+
+      it('hides the active item count when current filter is "completed"', async () => {
+        setup();
+
+        // click on the completed filter
+        const completedFilterBtn = screen.getByRole('button', {
+          name: TODO_LIST_FILTERS_MAP.completed.label,
+        });
+        await userEvent.click(completedFilterBtn);
+
+        // assert that active items count is NOT present
+        const activeItemsCount = screen.queryByText(
+          generateTodoListCountText(
+            filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length
+          )
+        );
+        expect(activeItemsCount).not.toBeInTheDocument();
+      });
     });
 
     describe(`"Clear completed" button`, () => {

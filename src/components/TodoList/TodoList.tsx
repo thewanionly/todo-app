@@ -47,6 +47,7 @@ export const TodoList = ({
   const filteredItems = filterTodoList(items, currentFilter);
 
   const activeItemsCount = filterTodoList(items, TODO_LIST_FILTERS_MAP.active.value).length;
+  const showActiveItemsCount = currentFilter !== TODO_LIST_FILTERS_MAP.completed.value;
   const showClearCompletedBtn = filteredItems.some(({ isCompleted }) => isCompleted);
 
   const isEmptyList = items.length === 0;
@@ -156,11 +157,9 @@ export const TodoList = ({
                 }`
               )}
             >
-              {activeItemsCount && (
-                <span className={`text-sm text-body-text ${showEmptyMessage ? 'invisible' : ''}`}>
-                  {generateTodoListCountText(activeItemsCount)}
-                </span>
-              )}
+              <span className={`text-sm text-body-text ${showEmptyMessage ? 'invisible' : ''}`}>
+                {showActiveItemsCount && generateTodoListCountText(activeItemsCount)}
+              </span>
               <FilterButtons
                 className={twMerge(
                   `absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none ${
