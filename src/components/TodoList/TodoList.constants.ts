@@ -34,12 +34,17 @@ export const EMPTY_MESSAGE_MAP: Record<TodoListFilterValues, string> = {
 export const MOCKED_TODO_LIST_ITEMS: TodoItemType[] = [
   {
     id: 'ab1',
-    value: 'Wash dishes',
+    value: 'Cook dinner',
     isCompleted: false,
   },
   {
     id: 'ab2',
-    value: 'Cook dinner',
+    value: 'Buy groceries',
     isCompleted: true,
+  },
+  {
+    id: 'ab3',
+    value: 'Wash dishes',
+    isCompleted: false,
   },
 ];

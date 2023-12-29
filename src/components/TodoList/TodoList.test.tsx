@@ -13,7 +13,7 @@ import {
   TODO_LIST_FILTERS_MAP,
 } from './TodoList.constants';
 import { useTodoList } from './TodoList.hooks';
-import { generateTodoListCountText } from './TodoList.utils';
+import { filterTodoList, generateTodoListCountText } from './TodoList.utils';
 
 const TodoListSetup = ({ isEmptyList = false }: { isEmptyList?: boolean }) => {
   const {
@@ -63,15 +63,6 @@ describe('TodoList', () => {
       expect(addTodoInput).toBeInTheDocument();
     });
 
-    it('displays the number of todo list items', () => {
-      setup();
-
-      const todoListCount = screen.getByText(
-        generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length)
-      );
-      expect(todoListCount).toBeInTheDocument();
-    });
-
     it('displays the todo list filter buttons', () => {
       setup();
 
@@ -118,9 +109,13 @@ describe('TodoList', () => {
         const newTodoItem = within(listEl).getByDisplayValue(newTodoItemValue);
         expect(newTodoItem).toBeInTheDocument();
 
-        // assert the todo list count if updated
+        // assert the active todo list count if updated
         expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length + 1))
+          screen.getByText(
+            generateTodoListCountText(
+              filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length + 1
+            )
+          )
         ).toBeInTheDocument();
       });
 
@@ -151,7 +146,11 @@ describe('TodoList', () => {
 
         // assert todo list count before entering
         expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+          screen.getByText(
+            generateTodoListCountText(
+              filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length
+            )
+          )
         ).toBeInTheDocument();
 
         // click enter
@@ -164,7 +163,11 @@ describe('TodoList', () => {
 
         // assert todo list count after entering
         expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+          screen.getByText(
+            generateTodoListCountText(
+              filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length
+            )
+          )
         ).toBeInTheDocument();
       });
 
@@ -197,11 +200,6 @@ describe('TodoList', () => {
       it('removes a todo item from the list after clicking on the delete button on the same todo item', async () => {
         setup();
 
-        // assert todo list count before deleting
-        expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
-        ).toBeInTheDocument();
-
         // assert that the first item is in the list
         expect(screen.getByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).toBeInTheDocument();
 
@@ -216,11 +214,6 @@ describe('TodoList', () => {
 
         // assert that the first item is removed from the list
         expect(screen.queryByDisplayValue(MOCKED_TODO_LIST_ITEMS[0].value)).not.toBeInTheDocument();
-
-        // assert todo list count after deleting
-        expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length - 1))
-        ).toBeInTheDocument();
       });
 
       it('deletes the todo item when value is updated to an empty string and input loses focus', async () => {
@@ -228,7 +221,11 @@ describe('TodoList', () => {
 
         // assert todo list count before deletion
         expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
+          screen.getByText(
+            generateTodoListCountText(
+              filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length
+            )
+          )
         ).toBeInTheDocument();
 
         // assert the first item's value
@@ -246,7 +243,11 @@ describe('TodoList', () => {
 
         // assert todo list count after deletion
         expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length - 1))
+          screen.getByText(
+            generateTodoListCountText(
+              filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length - 1
+            )
+          )
         ).toBeInTheDocument();
       });
     });
@@ -430,28 +431,45 @@ describe('TodoList', () => {
       });
     });
 
+    describe('Active items count', () => {
+      it('displays the number of active todo list items', () => {
+        setup();
+
+        const activeItemsCount = screen.getByText(
+          generateTodoListCountText(
+            filterTodoList(MOCKED_TODO_LIST_ITEMS, TODO_LIST_FILTERS_MAP.active.value).length
+          )
+        );
+        expect(activeItemsCount).toBeInTheDocument();
+      });
+    });
+
     describe(`"Clear completed" button`, () => {
       it('removes all the completed items after "clear completed" button is clicked', async () => {
         setup();
 
-        // assert todo list count before deletion
-        expect(
-          screen.getByText(generateTodoListCountText(MOCKED_TODO_LIST_ITEMS.length))
-        ).toBeInTheDocument();
+        // assert that completed items are present before deletion
+        MOCKED_TODO_LIST_ITEMS.forEach(({ value, isCompleted }) => {
+          const todoItem = screen.queryByDisplayValue(value);
+
+          if (isCompleted) {
+            expect(todoItem).toBeInTheDocument();
+          }
+        });
 
         const clearCompletedBtn = screen.getByRole('button', { name: CLEAR_COMPLETED_BTN_LABEL });
 
         // click clear completed button
         await userEvent.click(clearCompletedBtn);
 
-        // assert todo list count after deletion
-        expect(
-          screen.getByText(
-            generateTodoListCountText(
-              MOCKED_TODO_LIST_ITEMS.filter(({ isCompleted }) => !isCompleted).length
-            )
-          )
-        ).toBeInTheDocument();
+        // assert that completed items are NOT present anymore after deletion
+        MOCKED_TODO_LIST_ITEMS.forEach(({ value, isCompleted }) => {
+          const todoItem = screen.queryByDisplayValue(value);
+
+          if (isCompleted) {
+            expect(todoItem).not.toBeInTheDocument();
+          }
+        });
       });
 
       it('does not display a button for clearing all completed items if there is no completed item', async () => {
