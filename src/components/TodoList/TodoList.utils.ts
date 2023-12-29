@@ -7,9 +7,11 @@ export const generateTodoListCountText = (itemCount: number): string => {
 };
 
 export const filterTodoList = (items: TodoItemType[], filterValue: string): TodoItemType[] => {
-  if (filterValue === TODO_LIST_FILTERS_MAP.active.value) {
-    return items.filter(({ isCompleted }) => !isCompleted);
-  }
+  // 'all' filter
+  if (filterValue === TODO_LIST_FILTERS_MAP.all.value) return items;
 
-  return items;
+  // 'active' and 'completed' filters
+  return items.filter(({ isCompleted }) =>
+    filterValue === TODO_LIST_FILTERS_MAP.active.value ? !isCompleted : isCompleted
+  );
 };

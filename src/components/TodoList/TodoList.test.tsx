@@ -8,6 +8,7 @@ import {
   EMPTY_TODO_LIST_MESSAGE,
   MOCKED_TODO_LIST_ITEMS,
   NO_ACTIVE_TODO_ITEMS_MESSAGE,
+  NO_COMPLETED_TODO_ITEMS_MESSAGE,
   TODO_LIST_FILTERS,
   TODO_LIST_FILTERS_MAP,
 } from './TodoList.constants';
@@ -343,18 +344,54 @@ describe('TodoList', () => {
       expect(noActiveTodoMessage).toBeInTheDocument();
     });
 
-    xit('updates the todo list to show the completed todo list items after clicking the "Completed" filter', () => {
+    it('updates the todo list to show the completed todo list items after clicking the "Completed" filter', async () => {
       setup();
 
-      // TODO:
+      // assert that all todo items are present before filtering
+      MOCKED_TODO_LIST_ITEMS.forEach(({ value }) => {
+        const todoItem = screen.getByDisplayValue(value);
+        expect(todoItem).toBeInTheDocument();
+      });
 
-      // assert the todo list count as well
+      // click on the active filter
+      const completedFilterBtn = screen.getByRole('button', {
+        name: TODO_LIST_FILTERS_MAP.completed.label,
+      });
+      await userEvent.click(completedFilterBtn);
+
+      // assert that only completed items are present
+      MOCKED_TODO_LIST_ITEMS.forEach(({ value, isCompleted }) => {
+        const todoItem = screen.queryByDisplayValue(value);
+
+        if (isCompleted) {
+          expect(todoItem).toBeInTheDocument();
+        } else {
+          expect(todoItem).not.toBeInTheDocument();
+        }
+      });
     });
 
-    xit(`displays a "no completed todo items" message when there's no completed todo items`, () => {
+    it(`displays a "no completed todo items" message when there's no completed todo items`, async () => {
       setup();
 
-      // TODO:
+      // untick completed items
+      const completedCheckboxes = screen
+        .getAllByRole<HTMLInputElement>('checkbox')
+        .filter((checkboxEl) => checkboxEl.checked);
+
+      for (const checkboxEl of completedCheckboxes) {
+        await userEvent.click(checkboxEl);
+      }
+
+      // click on the completed filter
+      const completedFilterBtn = screen.getByRole('button', {
+        name: TODO_LIST_FILTERS_MAP.completed.label,
+      });
+      await userEvent.click(completedFilterBtn);
+
+      // assert that "no completed todo items" is present
+      const noCompletedTodoMessage = screen.getByText(NO_COMPLETED_TODO_ITEMS_MESSAGE);
+      expect(noCompletedTodoMessage).toBeInTheDocument();
     });
 
     it('removes all the completed items after "clear completed" button is clicked', async () => {
