@@ -7,6 +7,7 @@ import {
   CLEAR_COMPLETED_BTN_LABEL,
   EMPTY_TODO_LIST_MESSAGE,
   MOCKED_TODO_LIST_ITEMS,
+  NO_ACTIVE_TODO_ITEMS_MESSAGE,
   TODO_LIST_FILTERS,
   TODO_LIST_FILTERS_MAP,
 } from './TodoList.constants';
@@ -319,10 +320,27 @@ describe('TodoList', () => {
       });
     });
 
-    xit(`displays a "no active todo items" message when there's no active todo items`, () => {
+    it(`displays a "no active todo items" message when there's no active todo items`, async () => {
       setup();
 
-      // TODO:
+      // mark active elements as completed
+      const activeCheckboxes = screen
+        .getAllByRole<HTMLInputElement>('checkbox')
+        .filter((checkboxEl) => !checkboxEl.checked);
+
+      for (const checkboxEl of activeCheckboxes) {
+        await userEvent.click(checkboxEl);
+      }
+
+      // click on the active filter
+      const activeFilterBtn = screen.getByRole('button', {
+        name: TODO_LIST_FILTERS_MAP.active.label,
+      });
+      await userEvent.click(activeFilterBtn);
+
+      // assert that "no active todo items" is present
+      const noActiveTodoMessage = screen.getByText(NO_ACTIVE_TODO_ITEMS_MESSAGE);
+      expect(noActiveTodoMessage).toBeInTheDocument();
     });
 
     xit('updates the todo list to show the completed todo list items after clicking the "Completed" filter', () => {

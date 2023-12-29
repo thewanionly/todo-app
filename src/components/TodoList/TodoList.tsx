@@ -1,6 +1,12 @@
 import { ChangeEvent, useState } from 'react';
 
-import { CLEAR_COMPLETED_BTN_LABEL, EMPTY_TODO_LIST_MESSAGE, TODO_LIST_FILTERS } from '.';
+import {
+  CLEAR_COMPLETED_BTN_LABEL,
+  EMPTY_MESSAGE_MAP,
+  TODO_LIST_FILTERS,
+  TODO_LIST_FILTERS_MAP,
+  TodoListFilterValues,
+} from '.';
 import { Button } from '../Button';
 import { FilterButtons } from '../FilterButtons';
 import { TodoItem, TodoItemMode } from '../TodoItem';
@@ -32,11 +38,16 @@ export const TodoList = ({
   onDeleteCompletedItems,
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
-  const [currentFilter, setCurrentFilter] = useState(TODO_LIST_FILTERS[0].value);
+  const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(
+    TODO_LIST_FILTERS[0].value as TodoListFilterValues
+  );
 
-  const isEmptyList = items.length === 0;
   const hasACompletedItem = items.some(({ isCompleted }) => isCompleted);
   const filteredItems = filterTodoList(items, currentFilter);
+
+  const isEmptyList = items.length === 0;
+  const showEmptyMessage = isEmptyList || filteredItems.length === 0;
+  const emptyMessage = EMPTY_MESSAGE_MAP[currentFilter];
 
   const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,8 +85,13 @@ export const TodoList = ({
     onDeleteItem(id);
   };
 
+  const handleDeleteCompletedItems = () => {
+    setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value as TodoListFilterValues);
+    onDeleteCompletedItems();
+  };
+
   const handleFilterChange = (value: string) => {
-    setCurrentFilter(value);
+    setCurrentFilter(value as TodoListFilterValues);
   };
 
   return (
@@ -91,31 +107,38 @@ export const TodoList = ({
         <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
       </form>
       <div className="shadow-todo-list-box-shadow">
-        {isEmptyList ? (
+        {showEmptyMessage && (
           <div className="flex items-center justify-center rounded-[5px] bg-todo-list-bg px-5 py-9 text-sm text-body-text">
-            {EMPTY_TODO_LIST_MESSAGE}
+            {emptyMessage}
           </div>
-        ) : (
+        )}
+        {!isEmptyList && (
           <>
-            <ul aria-label="todo list">
-              {filteredItems.map(({ id, value, isCompleted }, index) => (
-                <li key={id}>
-                  <TodoItem
-                    className={`rounded-none border-b border-todo-item-bottom-border  ${
-                      index === 0 ? 'rounded-t-[5px]' : ''
-                    }`}
-                    mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-                    value={value}
-                    onEditValue={handleEditItemValue(id)}
-                    onInputBlur={handleInputBlur(id)}
-                    onToggleCompleted={handleToggleItemCompleted(id)}
-                    onDelete={handleDeleteItem(id)}
-                  />
-                </li>
-              ))}
-            </ul>
-            <div className="relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5">
-              <span className="text-sm text-body-text">
+            {!showEmptyMessage && (
+              <ul aria-label="todo list">
+                {filteredItems.map(({ id, value, isCompleted }, index) => (
+                  <li key={id}>
+                    <TodoItem
+                      className={`rounded-none border-b border-todo-item-bottom-border ${
+                        index === 0 ? 'rounded-t-[5px]' : ''
+                      }`}
+                      mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+                      value={value}
+                      onEditValue={handleEditItemValue(id)}
+                      onInputBlur={handleInputBlur(id)}
+                      onToggleCompleted={handleToggleItemCompleted(id)}
+                      onDelete={handleDeleteItem(id)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div
+              className={`relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5  ${
+                showEmptyMessage ? 'border-t border-todo-item-bottom-border' : ''
+              }`}
+            >
+              <span className={`text-sm text-body-text ${showEmptyMessage ? 'invisible' : ''}`}>
                 {generateTodoListCountText(items.length)}
               </span>
               <FilterButtons
@@ -126,8 +149,10 @@ export const TodoList = ({
               />
               {hasACompletedItem && (
                 <Button
-                  className="p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover"
-                  onClick={onDeleteCompletedItems}
+                  className={`p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover ${
+                    showEmptyMessage ? 'invisible' : ''
+                  }`}
+                  onClick={handleDeleteCompletedItems}
                 >
                   {CLEAR_COMPLETED_BTN_LABEL}
                 </Button>
