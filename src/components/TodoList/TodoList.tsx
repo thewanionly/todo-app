@@ -130,7 +130,7 @@ export const TodoList = ({
         {!isEmptyList && (
           <>
             {!showEmptyMessage && (
-              <ul aria-label="todo list">
+              <ul aria-label="todo list" className="todo-list max-h-[42vh] overflow-auto">
                 {filteredItems.map(({ id, value, isCompleted }, index) => (
                   <li key={id}>
                     <TodoItem
