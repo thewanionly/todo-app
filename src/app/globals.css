@@ -83,7 +83,7 @@ html *:focus-visible {
 
 /* Custom scrollbar Track */
 .todo-list::-webkit-scrollbar-track {
-  @apply bg-todo-list-scrollbar-bg;
+  @apply rounded-tr-[5px] bg-todo-list-scrollbar-bg;
 }
 
 /* Custom scrollbar Handle */

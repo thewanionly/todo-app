@@ -130,13 +130,14 @@ export const TodoList = ({
         {!isEmptyList && (
           <>
             {!showEmptyMessage && (
-              <ul aria-label="todo list" className="todo-list max-h-[42vh] overflow-auto">
-                {filteredItems.map(({ id, value, isCompleted }, index) => (
+              <ul
+                aria-label="todo list"
+                className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px]"
+              >
+                {filteredItems.map(({ id, value, isCompleted }) => (
                   <li key={id}>
                     <TodoItem
-                      className={`rounded-none border-b border-todo-item-bottom-border ${
-                        index === 0 ? 'rounded-t-[5px]' : ''
-                      }`}
+                      className={`rounded-none border-b border-todo-item-bottom-border`}
                       mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
                       value={value}
                       onEditValue={handleEditItemValue(id)}
