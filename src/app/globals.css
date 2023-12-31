@@ -4,6 +4,9 @@
 
 /* Light mode (default theme)  */
 :root {
+  --logo-heading-text: #fff;
+  --dark-mode-toggle-btn: #fff;
+  --dark-mode-toggle-btn-hover: #ccc;
   --body-bg: #fafafa;
   --body-text: #9495a5;
   --focus-visible-outline: #171823;
@@ -37,6 +40,9 @@
 /* Dark mode */
 html.dark,
 #storybook-root.dark {
+  --logo-heading-text: #fff;
+  --dark-mode-toggle-btn: #fff;
+  --dark-mode-toggle-btn-hover: #ccc;
   --body-bg: #171823;
   --body-text: #5b5e7e;
   --focus-visible-outline: #fafafa;

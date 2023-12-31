@@ -10,6 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'logo-heading-text': 'var(--logo-heading-text)',
+        'dark-mode-toggle-btn': 'var(--dark-mode-toggle-btn)',
+        'dark-mode-toggle-btn-hover': 'var(--dark-mode-toggle-btn-hover)',
         'body-bg': 'var(--body-bg)',
         'body-text': 'var(--body-text)',
         'focus-visible-outline': 'var(--focus-visible-outline)',
