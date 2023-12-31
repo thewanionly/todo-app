@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ForwardedRef, forwardRef, useState } from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
@@ -30,15 +30,18 @@ interface TodoListProps {
   onDeleteCompletedItems: () => void;
 }
 
-export const TodoList = ({
-  className = '',
-  items,
-  onAddItem,
-  onItemValueChange,
-  onItemCompletedChange,
-  onDeleteItem,
-  onDeleteCompletedItems,
-}: TodoListProps) => {
+export const TodoList = forwardRef(function TodoListComponent(
+  {
+    className = '',
+    items,
+    onAddItem,
+    onItemValueChange,
+    onItemCompletedChange,
+    onDeleteItem,
+    onDeleteCompletedItems,
+  }: TodoListProps,
+  ref: ForwardedRef<HTMLUListElement>
+) {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
   const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(
     TODO_LIST_FILTERS[0].value
@@ -131,6 +134,7 @@ export const TodoList = ({
           <>
             {!showEmptyMessage && (
               <ul
+                ref={ref}
                 aria-label="todo list"
                 className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px]"
               >
@@ -187,4 +191,4 @@ export const TodoList = ({
       </div>
     </div>
   );
-};
+});

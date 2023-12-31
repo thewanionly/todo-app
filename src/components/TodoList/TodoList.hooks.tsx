@@ -1,9 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { TodoItemType } from '.';
 
 export const useTodoList = (todoListItems: TodoItemType[]) => {
+  const todoListRef = useRef<HTMLUListElement | null>(null);
   const [items, setItems] = useState<TodoItemType[]>(todoListItems);
+  const [scrollToBottom, setScrollToBottom] = useState(false);
+
+  const handleScrollListToBottom = () => {
+    if (!todoListRef.current) return;
+
+    // Scroll to the bottom of the element
+    todoListRef.current.scrollTop = todoListRef.current.scrollHeight;
+
+    // Set scrollToBottom to false again after scrolling is done
+    setScrollToBottom(false);
+  };
+
+  useEffect(() => {
+    if (!scrollToBottom) return;
+
+    handleScrollListToBottom();
+  }, [scrollToBottom]);
 
   const onAddItem = (value: string) => {
     setItems((prevItems) => [
@@ -14,6 +32,9 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
         isCompleted: false,
       },
     ]);
+
+    // scroll list to bottom after adding new item
+    setScrollToBottom(true);
   };
 
   const onItemValueChange = (id: string, value: string) => {
@@ -35,6 +56,7 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
   };
 
   return {
+    todoListRef,
     items,
     onAddItem,
     onItemValueChange,

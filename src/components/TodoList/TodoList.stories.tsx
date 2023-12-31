@@ -13,6 +13,7 @@ type Story = StoryObj<typeof TodoList>;
 
 const TodoListContainer = () => {
   const {
+    todoListRef,
     items,
     onAddItem,
     onItemValueChange,
@@ -24,6 +25,7 @@ const TodoListContainer = () => {
   return (
     <div className="p-10">
       <TodoList
+        ref={todoListRef}
         className="min-w-[300px] max-w-xl"
         items={items}
         onAddItem={onAddItem}
