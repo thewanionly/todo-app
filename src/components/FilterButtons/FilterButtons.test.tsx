@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { FilterButtons } from '.';
-import { TODO_LIST_FILTERS } from '../TodoList';
+import { TODO_LIST_FILTERS, TODO_LIST_FILTERS_MAP } from '../TodoList';
 
 describe('FilterButtons', () => {
   it('displays the filter buttons', () => {
@@ -22,12 +22,15 @@ describe('FilterButtons', () => {
 
   it('display the filter indicated in `defaultFilter` prop as an active filter by default', () => {
     render(
-      <FilterButtons filters={TODO_LIST_FILTERS} defaultFilter={TODO_LIST_FILTERS[1].value} />
+      <FilterButtons
+        filters={TODO_LIST_FILTERS}
+        defaultFilter={TODO_LIST_FILTERS_MAP.active.value}
+      />
     );
 
     const activeFilterButton = screen.getByRole('button', { pressed: true });
 
-    expect(activeFilterButton).toHaveTextContent(TODO_LIST_FILTERS[1].label);
+    expect(activeFilterButton).toHaveTextContent(TODO_LIST_FILTERS_MAP.active.label);
   });
 
   it(`changes the active filter when clicking an inactive filter button`, async () => {

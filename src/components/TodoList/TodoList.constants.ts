@@ -1,21 +1,30 @@
 import { TodoItemType } from './TodoList';
 
-export const TODO_LIST_FILTERS_MAP = {
-  all: {
+export enum TodoListFilterValues {
+  All = 'all',
+  Active = 'active',
+  Completed = 'completed',
+}
+
+interface TodoListFilterMapProperties {
+  label: string;
+  value: TodoListFilterValues;
+}
+
+export const TODO_LIST_FILTERS_MAP: Record<TodoListFilterValues, TodoListFilterMapProperties> = {
+  [TodoListFilterValues.All]: {
     label: 'All',
-    value: 'all',
+    value: TodoListFilterValues.All,
   },
-  active: {
+  [TodoListFilterValues.Active]: {
     label: 'Active',
-    value: 'active',
+    value: TodoListFilterValues.Active,
   },
-  completed: {
+  [TodoListFilterValues.Completed]: {
     label: 'Completed',
-    value: 'completed',
+    value: TodoListFilterValues.Completed,
   },
 };
-
-export type TodoListFilterValues = keyof typeof TODO_LIST_FILTERS_MAP;
 
 export const TODO_LIST_FILTERS = Object.values(TODO_LIST_FILTERS_MAP);
 
@@ -25,9 +34,9 @@ export const NO_ACTIVE_TODO_ITEMS_MESSAGE = 'You have no active todo items.';
 export const NO_COMPLETED_TODO_ITEMS_MESSAGE = 'You have no completed todo items.';
 
 export const EMPTY_MESSAGE_MAP: Record<TodoListFilterValues, string> = {
-  all: EMPTY_TODO_LIST_MESSAGE,
-  active: NO_ACTIVE_TODO_ITEMS_MESSAGE,
-  completed: NO_COMPLETED_TODO_ITEMS_MESSAGE,
+  [TodoListFilterValues.All]: EMPTY_TODO_LIST_MESSAGE,
+  [TodoListFilterValues.Active]: NO_ACTIVE_TODO_ITEMS_MESSAGE,
+  [TodoListFilterValues.Completed]: NO_COMPLETED_TODO_ITEMS_MESSAGE,
 };
 
 // mocks

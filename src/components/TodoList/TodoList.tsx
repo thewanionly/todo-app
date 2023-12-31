@@ -41,7 +41,7 @@ export const TodoList = ({
 }: TodoListProps) => {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
   const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(
-    TODO_LIST_FILTERS[0].value as TodoListFilterValues
+    TODO_LIST_FILTERS[0].value
   );
 
   const filteredItems = filterTodoList(items, currentFilter);
@@ -68,7 +68,7 @@ export const TodoList = ({
 
     // Set `currentFilter` to "all" when adding a new item under "completed" `currentFilter`
     if (currentFilter === TODO_LIST_FILTERS_MAP.completed.value) {
-      setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value as TodoListFilterValues);
+      setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value);
     }
   };
 
