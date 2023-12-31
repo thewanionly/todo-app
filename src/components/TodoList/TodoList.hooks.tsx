@@ -7,12 +7,12 @@ export const useTodoList = (todoListItems: TodoItemType[]) => {
 
   const onAddItem = (value: string) => {
     setItems((prevItems) => [
+      ...prevItems,
       {
         id: crypto.randomUUID(),
         value,
         isCompleted: false,
       },
-      ...prevItems,
     ]);
   };
 
