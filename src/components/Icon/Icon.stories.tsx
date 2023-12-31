@@ -16,7 +16,7 @@ const AllIconsComponent = () => {
     <div className="flex gap-20 p-10">
       {allIcons.map((iconName) => (
         <div key={iconName} className="flex flex-col items-center gap-4 text-body-text">
-          <Icon name={iconName as IconName} />
+          <Icon name={iconName} />
           <span>{iconName}</span>
         </div>
       ))}
