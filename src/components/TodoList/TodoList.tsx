@@ -153,7 +153,7 @@ export const TodoList = ({
               className={twMerge(
                 `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5 ${
                   showEmptyMessage
-                    ? 'h-0 p-0 md:h-auto md:border-t md:border-todo-item-bottom-border md:px-5 md:py-3.5'
+                    ? 'h-0 p-0 md:h-[50px] md:border-t md:border-todo-item-bottom-border md:px-5 md:py-3.5'
                     : ''
                 }`
               )}
