@@ -49,6 +49,9 @@ const config: Config = {
       fontFamily: {
         'josefin-sans': ['var(--josefin-sans-font)'],
       },
+      screens: {
+        xs: '400px',
+      },
     },
   },
   plugins: [],
