@@ -3,8 +3,7 @@ import Link from 'next/link';
 
 import { twMerge } from 'tailwind-merge';
 
-import { Button } from '../Button';
-import { Icon, IconName } from '../Icon';
+import { DarkModeToggle, useDarkMode } from '../DarkModeToggle';
 import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
 type HeaderProps = {
@@ -32,6 +31,8 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
 };
 
 export const Header = ({ className = '' }: HeaderProps) => {
+  const { isDarkMode, toggleDarkMode } = useDarkMode(false);
+
   return (
     <>
       <header className={twMerge(`relative z-10 flex items-center justify-between ${className}`)}>
@@ -42,14 +43,9 @@ export const Header = ({ className = '' }: HeaderProps) => {
         >
           <Link href="/">{LOGO_HEADING}</Link>
         </h1>
-        <Button aria-label="dark-mode-toggle-button" className="p-0">
-          <Icon
-            name={IconName.Sun}
-            className="h-5 w-5 text-dark-mode-toggle-btn hover:text-dark-mode-toggle-btn-hover md:h-[26px]  md:w-[26px]"
-          />
-        </Button>
+        <DarkModeToggle isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
       </header>
-      <HeaderBackgroundImage isDarkMode={true} />
+      <HeaderBackgroundImage isDarkMode={isDarkMode} />
     </>
   );
 };
