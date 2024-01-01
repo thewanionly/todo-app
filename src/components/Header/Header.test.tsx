@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import { Header } from './Header';
-import { LOGO_HEADING } from './Header.constants';
+import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
 describe('Header', () => {
   it('displays the header', () => {
@@ -30,12 +30,17 @@ describe('Header', () => {
   it('displays the dark mode toggle', () => {
     render(<Header />);
 
-    const darkModeToggleBtn = screen.queryByRole('button', { name: 'dark-mode-toggle-button' });
+    const darkModeToggleBtn = screen.getByRole('button', { name: 'dark-mode-toggle-button' });
 
     expect(darkModeToggleBtn).toBeInTheDocument();
   });
 
-  xit('displays a background image', () => {
-    // TODO:
+  it('displays a background image', () => {
+    render(<Header />);
+
+    // display dark mode by default
+    const headerBgImage = screen.getByAltText(HEADER_BG_IMAGES.desktop.dark.alt);
+
+    expect(headerBgImage).toBeInTheDocument();
   });
 });
