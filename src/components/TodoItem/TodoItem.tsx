@@ -1,4 +1,6 @@
-import { ChangeEvent, FocusEvent, useEffect, useId, useState } from 'react';
+import { ChangeEvent, FocusEvent, useId, useState } from 'react';
+
+import { useOnValueChange } from '@/hooks';
 
 import { Button } from '../Button';
 import { Icon, IconName } from '../Icon';
@@ -110,9 +112,9 @@ const TodoItemInput = ({
     onBlur?.(event.target.value);
   };
 
-  useEffect(() => {
+  useOnValueChange(() => {
     setInputValue(value);
-  }, [value]);
+  }, value);
 
   return (
     <input

@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+import { useOnValueChange } from '@/hooks';
 
 import { Button } from '../Button';
 
@@ -27,9 +29,9 @@ export const FilterButtons = ({
     onSelectFilter?.(value);
   };
 
-  useEffect(() => {
+  useOnValueChange(() => {
     setSelectedFilter(defaultFilter);
-  }, [defaultFilter]);
+  }, defaultFilter);
 
   return (
     <ul
