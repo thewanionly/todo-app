@@ -108,9 +108,8 @@ export const TodoList = forwardRef(function TodoListComponent(
 
   return (
     <div className={className}>
-      <form onSubmit={handleAddNewTodoItem} className="relative">
+      <form onSubmit={handleAddNewTodoItem} className="relative mb-4 md:mb-6">
         <TodoItem
-          className="mb-4"
           mode={TodoItemMode.CREATE}
           value={newTodoItemValue}
           onEditValue={handleNewTodoItemValueChange}
@@ -122,7 +121,7 @@ export const TodoList = forwardRef(function TodoListComponent(
         {showEmptyMessage && (
           <div
             className={twMerge(
-              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg text-sm text-body-text ${
+              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg text-body-text md:text-lg ${
                 !isEmptyList ? 'md:rounded-b-none' : ''
               }`
             )}
@@ -155,9 +154,9 @@ export const TodoList = forwardRef(function TodoListComponent(
             )}
             <div
               className={twMerge(
-                `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-3.5 ${
+                `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-4 md:px-6 ${
                   showEmptyMessage
-                    ? 'h-0 p-0 md:h-[50px] md:border-t md:border-todo-item-bottom-border md:px-5 md:py-3.5'
+                    ? 'h-0 p-0 md:h-[50px] md:border-t md:border-todo-item-bottom-border md:px-6 md:py-4'
                     : ''
                 }`
               )}
