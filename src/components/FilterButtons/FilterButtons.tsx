@@ -42,7 +42,7 @@ export const FilterButtons = ({
         <li key={value}>
           <Button
             aria-pressed={selectedFilter === value}
-            className={`p-0 font-bold text-filter-buttons-text hover:text-filter-buttons-text-hover ${
+            className={`p-0 text-sm font-bold text-filter-buttons-text hover:text-filter-buttons-text-hover ${
               selectedFilter === value
                 ? 'text-filter-buttons-text-active hover:text-filter-buttons-text-active'
                 : ''
