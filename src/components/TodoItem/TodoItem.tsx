@@ -120,7 +120,7 @@ const TodoItemInput = ({
 
   return (
     <input
-      className={`w-full bg-transparent text-todo-item-text placeholder:text-todo-item-placeholder-text ${
+      className={`w-full bg-transparent tracking-[-0.167px] text-todo-item-text  placeholder:text-todo-item-placeholder-text md:tracking-[-0.25px] ${
         isCompleted ? 'text-todo-item-text-completed line-through' : ''
       }`}
       placeholder={placeholder}

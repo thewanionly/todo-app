@@ -121,7 +121,7 @@ export const TodoList = forwardRef(function TodoListComponent(
         {showEmptyMessage && (
           <div
             className={twMerge(
-              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg text-body-text md:text-lg ${
+              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg tracking-[-0.167px] text-body-text md:text-lg md:tracking-[-0.25px] ${
                 !isEmptyList ? 'md:rounded-b-none' : ''
               }`
             )}
@@ -161,7 +161,11 @@ export const TodoList = forwardRef(function TodoListComponent(
                 }`
               )}
             >
-              <span className={`text-sm text-body-text ${showEmptyMessage ? 'invisible' : ''}`}>
+              <span
+                className={`text-sm tracking-[-0.167px] text-body-text md:tracking-[-0.194px] ${
+                  showEmptyMessage ? 'invisible' : ''
+                }`}
+              >
                 {showActiveItemsCount && generateTodoListCountText(activeItemsCount)}
               </span>
               <FilterButtons
@@ -176,7 +180,7 @@ export const TodoList = forwardRef(function TodoListComponent(
               />
               {showClearCompletedBtn && (
                 <Button
-                  className={`p-0 text-sm text-clear-completd-btn-text hover:text-clear-completd-btn-text-hover ${
+                  className={`p-0 text-sm tracking-[-0.167px] text-clear-completd-btn-text  hover:text-clear-completd-btn-text-hover md:tracking-[-0.194px] ${
                     showEmptyMessage ? 'invisible' : ''
                   }`}
                   onClick={handleDeleteCompletedItems}
