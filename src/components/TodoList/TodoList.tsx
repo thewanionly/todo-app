@@ -23,6 +23,7 @@ export interface TodoItemType {
 interface TodoListProps {
   className?: string;
   items: TodoItemType[];
+  initialFilter?: TodoListFilterValues;
   onAddItem: (value: string) => void;
   onItemValueChange: (id: string, newValue: string) => void;
   onItemCompletedChange: (id: string, newIsCompleted: boolean) => void;
@@ -34,6 +35,7 @@ export const TodoList = forwardRef(function TodoListComponent(
   {
     className = '',
     items,
+    initialFilter = TODO_LIST_FILTERS[0].value,
     onAddItem,
     onItemValueChange,
     onItemCompletedChange,
@@ -43,9 +45,7 @@ export const TodoList = forwardRef(function TodoListComponent(
   ref: ForwardedRef<HTMLUListElement>
 ) {
   const [newTodoItemValue, setNewTodoItemValue] = useState('');
-  const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(
-    TODO_LIST_FILTERS[0].value
-  );
+  const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(initialFilter);
 
   const filteredItems = filterTodoList(items, currentFilter);
 
