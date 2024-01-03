@@ -10,7 +10,7 @@ const meta: Meta<typeof FilterButtons> = {
 export default meta;
 type Story = StoryObj<typeof FilterButtons>;
 
-export const TodoListFilters: Story = {
+export const Default: Story = {
   args: {
     className: 'w-80',
     filters: TODO_LIST_FILTERS,
