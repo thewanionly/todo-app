@@ -1,5 +1,7 @@
 import { ChangeEvent, FocusEvent, useId, useState } from 'react';
 
+import { twMerge } from 'tailwind-merge';
+
 import { useOnValueChange } from '@/hooks';
 
 import { Button } from '../Button';
@@ -76,16 +78,16 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
           checked
             ? 'bg-todo-item-toggle-completed'
             : 'bg-todo-item-toggle-border hover:bg-todo-item-toggle-border-hover'
-        } flex h-5 w-5 cursor-pointer items-center justify-center rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus-visible-outline`}
+        } flex h-5 w-5 cursor-pointer items-center justify-center rounded-full peer-focus-visible:outline peer-focus-visible:outline-1 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus-visible-outline md:h-6 md:w-6`}
       >
         {checked ? (
           <Icon
             name={IconName.Check}
-            className={`h-2 w-2.5 text-todo-item-toggle-completed-check-icon`}
+            className={`h-2 w-2.5 text-todo-item-toggle-completed-check-icon md:h-2.5 md:w-3`}
           />
         ) : (
           <span
-            className={`h-[19px] w-[19px] rounded-full bg-todo-item-toggle-bg`}
+            className={`h-[19px] w-[19px] rounded-full bg-todo-item-toggle-bg md:h-[23px] md:w-[23px]`}
             aria-hidden="true"
           />
         )}
@@ -149,9 +151,9 @@ export const TodoItem = ({
 
   return (
     <div
-      className={`flex gap-3 rounded-[5px] bg-todo-item-bg px-5 ${
-        mode === TodoItemMode.CREATE ? 'py-3.5' : 'py-4'
-      } shadow-todo-item-box-shadow ${className}`}
+      className={twMerge(
+        `flex gap-3 rounded-[5px] bg-todo-item-bg px-5 py-4 shadow-todo-item-box-shadow md:gap-6 md:px-6 md:py-5 md:text-lg ${className}`
+      )}
     >
       <TodoItemCheckbox
         checked={completed}
@@ -169,7 +171,7 @@ export const TodoItem = ({
         <Button aria-label="remove-button" className="p-0" onClick={onDelete}>
           <Icon
             name={IconName.Close}
-            className="text-todo-item-remove-btn hover:text-todo-item-remove-btn-hover"
+            className="h-4 w-4 text-todo-item-remove-btn hover:text-todo-item-remove-btn-hover md:h-5 md:w-5"
           />
         </Button>
       )}
