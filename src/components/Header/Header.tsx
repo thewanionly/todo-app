@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,16 +24,24 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
   const altText = HEADER_BG_IMAGES.mobile[mode].alt;
 
   return (
-    <picture className="absolute left-0 top-0 block aspect-[1.875] w-full xs:aspect-[4.8]">
-      <source media="(min-width: 400px)" srcSet={desktopSrc} />
-      <source media="(max-width: 400px)" srcSet={mobileSrc} />
-      <Image src={mobileSrc} alt={altText} fill />
+    <picture className="absolute left-0 top-0 block aspect-[1.875] min-h-[160px] w-full xs:aspect-[4.8] md:min-h-[200px]">
+      <source media="(min-width: 450px)" srcSet={desktopSrc} />
+      <source media="(max-width: 450px)" srcSet={mobileSrc} />
+      <Image className="object-cover" src={mobileSrc} alt={altText} fill priority />
     </picture>
   );
 };
 
 export const Header = ({ className = '' }: HeaderProps) => {
   const { isDarkMode, toggleDarkMode } = useDarkMode(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.querySelector('html')?.classList.add('dark');
+    } else {
+      document.querySelector('html')?.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   return (
     <>

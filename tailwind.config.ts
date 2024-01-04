@@ -50,7 +50,7 @@ const config: Config = {
         'josefin-sans': ['var(--josefin-sans-font)'],
       },
       screens: {
-        xs: '400px',
+        xs: '450px',
       },
     },
   },

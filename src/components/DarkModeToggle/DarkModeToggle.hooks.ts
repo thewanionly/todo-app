@@ -3,18 +3,18 @@ import { useCallback, useState } from 'react';
 const DARK_MODE_LOCAL_STORAGE_KEY = 'isDarkMode';
 
 export const useDarkMode = (defaultValue?: boolean) => {
-  // Get user's browser theme preference
-  const isDarkModeInColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   // Dark mode's initial value can be retrieved from various sources.
   // Here's the priority:
   //  [1] app's dark mode toggle set in local storage
   //  [2] app's dark mode toggle default value
   //  [3] user's browser theme preference
   const initializeDarkModeState = useCallback((): boolean => {
-    const initialValue = defaultValue ?? isDarkModeInColorScheme;
+    if (typeof window === 'undefined') return defaultValue ?? false;
 
-    if (typeof window === 'undefined') return initialValue;
+    // Get user's browser theme preference
+    const isDarkModeInColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const initialValue = defaultValue ?? isDarkModeInColorScheme;
 
     try {
       // Get dark mode value from local storage
@@ -25,7 +25,7 @@ export const useDarkMode = (defaultValue?: boolean) => {
       console.warn(`Error reading localStorage key “${DARK_MODE_LOCAL_STORAGE_KEY}”:`, error);
       return initialValue;
     }
-  }, [defaultValue, isDarkModeInColorScheme]);
+  }, [defaultValue]);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(initializeDarkModeState);
 
