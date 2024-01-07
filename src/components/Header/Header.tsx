@@ -24,7 +24,7 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
   const altText = HEADER_BG_IMAGES.mobile[mode].alt;
 
   return (
-    <picture className="absolute left-0 top-0 block aspect-[1.875] min-h-[160px] w-full xs:aspect-[4.8] md:min-h-[200px]">
+    <picture className="absolute left-0 top-0 block aspect-[1.875] max-h-[300px] min-h-[160px] w-full xs:aspect-[4.8] md:min-h-[200px]">
       <source media="(min-width: 450px)" srcSet={desktopSrc} />
       <source media="(max-width: 450px)" srcSet={mobileSrc} />
       <Image className="object-cover" src={mobileSrc} alt={altText} fill priority />
