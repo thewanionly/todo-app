@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from './DarkModeToggle.constants';
@@ -8,6 +10,17 @@ type DarkModeToggleProps = {
 };
 
 export const DarkModeToggle = ({ isDarkMode, onToggle }: DarkModeToggleProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   const icon = DARK_MODE_TOGGLE_BUTTON_ICONS[isDarkMode ? 'dark' : 'light'];
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +17,17 @@ type HeaderBackgroundImageProps = {
 };
 
 const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   const mode = isDarkMode ? 'dark' : 'light';
 
   const desktopSrc = HEADER_BG_IMAGES.desktop[mode].src;
@@ -34,14 +45,6 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
 
 export const Header = ({ className = '' }: HeaderProps) => {
   const { isDarkMode, toggleDarkMode } = useDarkMode(false);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.querySelector('html')?.classList.add('dark');
-    } else {
-      document.querySelector('html')?.classList.remove('dark');
-    }
-  }, [isDarkMode]);
 
   return (
     <>

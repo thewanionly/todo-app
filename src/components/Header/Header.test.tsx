@@ -1,20 +1,21 @@
 import { render, screen } from '@testing-library/react';
 
+import { DarkModeProvider } from '../DarkModeToggle/DarkModeProvider';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from '../DarkModeToggle/DarkModeToggle.constants';
 import { Header } from './Header';
 import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
-// Mock "useDarkMode"
-jest.mock('../DarkModeToggle/DarkModeToggle.hooks', () => ({
-  __esModule: true,
-  useDarkMode: jest.fn(() => ({
-    isDarkMode: true, // set dark mode to true by default
-  })),
-}));
+const setup = () => {
+  render(
+    <DarkModeProvider defaultValue="dark">
+      <Header />
+    </DarkModeProvider>
+  );
+};
 
 describe('Header', () => {
   it('displays the header', () => {
-    render(<Header />);
+    setup();
 
     const header = screen.getByRole('banner');
 
@@ -22,14 +23,14 @@ describe('Header', () => {
   });
 
   it('displays the logo heading', () => {
-    render(<Header />);
+    setup();
 
     const logoHeading = screen.getByRole('heading', { name: LOGO_HEADING });
     expect(logoHeading).toBeInTheDocument();
   });
 
   it('contains link to Home page in the logo heading', () => {
-    render(<Header />);
+    setup();
 
     const logoLink = screen.getByRole('link', { name: LOGO_HEADING });
 
@@ -37,7 +38,7 @@ describe('Header', () => {
   });
 
   it('displays the dark mode toggle - set as dark mode to true by default', () => {
-    render(<Header />);
+    setup();
 
     const darkModeToggleBtn = screen.getByRole('button', { name: 'dark-mode-toggle-button' });
     const darkModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.dark} icon`);
@@ -47,7 +48,7 @@ describe('Header', () => {
   });
 
   it('displays the dark mode background image', () => {
-    render(<Header />);
+    setup();
 
     const headerBgImage = screen.getByAltText(HEADER_BG_IMAGES.desktop.dark.alt);
 

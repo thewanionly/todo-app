@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { DarkModeProvider } from '@/components/DarkModeToggle/DarkModeProvider';
 import { josefinSans } from '@/lib/fonts';
 
 import './globals.css';
@@ -31,8 +32,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${josefinSans.variable} bg-body-bg`}>
-      <body>{children}</body>
+    <html lang="en" className={`${josefinSans.variable} bg-body-bg`} suppressHydrationWarning>
+      <body>
+        <DarkModeProvider>{children}</DarkModeProvider>
+      </body>
     </html>
   );
 }

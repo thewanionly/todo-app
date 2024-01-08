@@ -2,17 +2,22 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { useDarkMode } from '.';
+import { DarkModeProvider } from './DarkModeProvider';
 import { DarkModeToggle } from './DarkModeToggle';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from './DarkModeToggle.constants';
 
-const DarkModeToggleSetup = ({ defaultValue = false }: { defaultValue: boolean }) => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode(defaultValue);
+const DarkModeToggleSetup = () => {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return <DarkModeToggle isDarkMode={isDarkMode} onToggle={toggleDarkMode} />;
 };
 
 const setup = (defaultValue = false) => {
-  render(<DarkModeToggleSetup defaultValue={defaultValue} />);
+  render(
+    <DarkModeProvider defaultValue={defaultValue ? 'dark' : 'light'}>
+      <DarkModeToggleSetup />
+    </DarkModeProvider>
+  );
 };
 
 describe('DarkModeToggle', () => {
