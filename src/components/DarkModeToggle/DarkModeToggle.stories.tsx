@@ -11,7 +11,7 @@ export default meta;
 type Story = StoryObj<typeof DarkModeToggle>;
 
 const DarkModeToggleContainer = () => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode(true);
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return <DarkModeToggle isDarkMode={isDarkMode} onToggle={toggleDarkMode} />;
 };

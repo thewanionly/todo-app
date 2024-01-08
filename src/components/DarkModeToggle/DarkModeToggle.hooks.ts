@@ -1,8 +1,6 @@
 import { useTheme } from 'next-themes';
 
-// TODO: remove defaultValue param
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const useDarkMode = (defaultValue?: boolean) => {
+export const useDarkMode = () => {
   const { resolvedTheme, setTheme } = useTheme();
 
   const toggleDarkMode = () => {

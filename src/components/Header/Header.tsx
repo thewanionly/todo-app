@@ -44,7 +44,7 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
 };
 
 export const Header = ({ className = '' }: HeaderProps) => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode(false);
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <>
