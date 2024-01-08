@@ -3,6 +3,7 @@ import React from 'react';
 import type { Preview } from '@storybook/react';
 
 import '../src/app/globals.css';
+import { DarkModeProvider } from '../src/components/DarkModeToggle/DarkModeProvider';
 import { josefinSans } from '../src/lib/fonts';
 
 const preview: Preview = {
@@ -21,7 +22,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <div id="storybook-decorator" className={josefinSans.variable}>
-        <Story />
+        <DarkModeProvider>
+          <Story />
+        </DarkModeProvider>
       </div>
     ),
   ],
