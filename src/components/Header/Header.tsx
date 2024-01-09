@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { twMerge } from 'tailwind-merge';
 
+import { AppTheme } from '@/utils/constants';
+
 import { DarkModeToggle, useDarkMode } from '../DarkModeToggle';
 import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
@@ -28,7 +30,7 @@ const HeaderBackgroundImage = ({ isDarkMode }: HeaderBackgroundImageProps) => {
     return null;
   }
 
-  const mode = isDarkMode ? 'dark' : 'light';
+  const mode = isDarkMode ? AppTheme.DARK : AppTheme.LIGHT;
 
   const desktopSrc = HEADER_BG_IMAGES.desktop[mode].src;
   const mobileSrc = HEADER_BG_IMAGES.mobile[mode].src;

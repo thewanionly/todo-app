@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import { AppTheme } from '@/utils/constants';
+
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from './DarkModeToggle.constants';
@@ -21,7 +23,7 @@ export const DarkModeToggle = ({ isDarkMode, onToggle }: DarkModeToggleProps) =>
     return null;
   }
 
-  const icon = DARK_MODE_TOGGLE_BUTTON_ICONS[isDarkMode ? 'dark' : 'light'];
+  const icon = DARK_MODE_TOGGLE_BUTTON_ICONS[isDarkMode ? AppTheme.DARK : AppTheme.LIGHT];
 
   return (
     <Button aria-label="dark-mode-toggle-button" className="p-0" onClick={onToggle}>

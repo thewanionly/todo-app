@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import { AppTheme } from '@/utils/constants';
+
 import { DarkModeProvider } from '../DarkModeToggle/DarkModeProvider';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from '../DarkModeToggle/DarkModeToggle.constants';
 import { Header } from './Header';
@@ -7,7 +9,7 @@ import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
 const setup = () => {
   render(
-    <DarkModeProvider defaultValue="dark">
+    <DarkModeProvider defaultValue={AppTheme.DARK}>
       <Header />
     </DarkModeProvider>
   );
@@ -41,7 +43,9 @@ describe('Header', () => {
     setup();
 
     const darkModeToggleBtn = screen.getByRole('button', { name: 'dark-mode-toggle-button' });
-    const darkModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.dark} icon`);
+    const darkModeIcon = screen.getByLabelText(
+      `${DARK_MODE_TOGGLE_BUTTON_ICONS[AppTheme.DARK]} icon`
+    );
 
     expect(darkModeToggleBtn).toBeInTheDocument();
     expect(darkModeIcon).toBeInTheDocument();
@@ -50,7 +54,7 @@ describe('Header', () => {
   it('displays the dark mode background image', () => {
     setup();
 
-    const headerBgImage = screen.getByAltText(HEADER_BG_IMAGES.desktop.dark.alt);
+    const headerBgImage = screen.getByAltText(HEADER_BG_IMAGES.desktop[AppTheme.DARK].alt);
 
     expect(headerBgImage).toBeInTheDocument();
   });

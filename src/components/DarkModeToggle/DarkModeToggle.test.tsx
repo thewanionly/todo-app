@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { AppTheme } from '@/utils/constants';
+
 import { useDarkMode } from '.';
 import { DarkModeProvider } from './DarkModeProvider';
 import { DarkModeToggle } from './DarkModeToggle';
@@ -14,7 +16,7 @@ const DarkModeToggleSetup = () => {
 
 const setup = (defaultValue = false) => {
   render(
-    <DarkModeProvider defaultValue={defaultValue ? 'dark' : 'light'}>
+    <DarkModeProvider defaultValue={defaultValue ? AppTheme.DARK : AppTheme.LIGHT}>
       <DarkModeToggleSetup />
     </DarkModeProvider>
   );
@@ -33,7 +35,9 @@ describe('DarkModeToggle', () => {
     it('displays the dark mode icon', () => {
       setup(true);
 
-      const darkModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.dark} icon`);
+      const darkModeIcon = screen.getByLabelText(
+        `${DARK_MODE_TOGGLE_BUTTON_ICONS[AppTheme.DARK]} icon`
+      );
 
       expect(darkModeIcon).toBeInTheDocument();
     });
@@ -44,7 +48,9 @@ describe('DarkModeToggle', () => {
       const darkModeToggleBtn = screen.getByRole('button', { name: 'dark-mode-toggle-button' });
       await userEvent.click(darkModeToggleBtn);
 
-      const lightModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.light} icon`);
+      const lightModeIcon = screen.getByLabelText(
+        `${DARK_MODE_TOGGLE_BUTTON_ICONS[AppTheme.LIGHT]} icon`
+      );
       expect(lightModeIcon).toBeInTheDocument();
     });
   });
@@ -53,7 +59,9 @@ describe('DarkModeToggle', () => {
     it('displays the light mode icon', () => {
       setup(false);
 
-      const lightModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.light} icon`);
+      const lightModeIcon = screen.getByLabelText(
+        `${DARK_MODE_TOGGLE_BUTTON_ICONS[AppTheme.LIGHT]} icon`
+      );
 
       expect(lightModeIcon).toBeInTheDocument();
     });
@@ -64,7 +72,9 @@ describe('DarkModeToggle', () => {
       const darkModeToggleBtn = screen.getByRole('button', { name: 'dark-mode-toggle-button' });
       await userEvent.click(darkModeToggleBtn);
 
-      const darkModeIcon = screen.getByLabelText(`${DARK_MODE_TOGGLE_BUTTON_ICONS.dark} icon`);
+      const darkModeIcon = screen.getByLabelText(
+        `${DARK_MODE_TOGGLE_BUTTON_ICONS[AppTheme.DARK]} icon`
+      );
       expect(darkModeIcon).toBeInTheDocument();
     });
   });
