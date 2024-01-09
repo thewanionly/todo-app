@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { render, screen } from '@/tests/setup';
 
 import { FilterButtons } from '.';
 import { TODO_LIST_FILTERS, TODO_LIST_FILTERS_MAP } from '../TodoList';

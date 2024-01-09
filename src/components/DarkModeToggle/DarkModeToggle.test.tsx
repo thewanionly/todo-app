@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { render, screen } from '@/tests/setup';
 import { AppTheme } from '@/utils/constants';
 
 import { useDarkMode } from '.';
-import { DarkModeProvider } from './DarkModeProvider';
 import { DarkModeToggle } from './DarkModeToggle';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from './DarkModeToggle.constants';
 
@@ -15,11 +14,7 @@ const DarkModeToggleSetup = () => {
 };
 
 const setup = (defaultValue = false) => {
-  render(
-    <DarkModeProvider defaultValue={defaultValue ? AppTheme.DARK : AppTheme.LIGHT}>
-      <DarkModeToggleSetup />
-    </DarkModeProvider>
-  );
+  render(<DarkModeToggleSetup />, { defaultTheme: defaultValue ? AppTheme.DARK : AppTheme.LIGHT });
 };
 
 describe('DarkModeToggle', () => {

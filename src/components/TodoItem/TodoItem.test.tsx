@@ -1,5 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { render, screen, waitFor } from '@/tests/setup';
 
 import { CREATE_TODO_PLACEHOLDER, TodoItem, TodoItemMode } from '.';
 

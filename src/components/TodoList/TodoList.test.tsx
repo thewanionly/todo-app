@@ -1,5 +1,6 @@
-import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { render, screen, within } from '@/tests/setup';
 
 import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';

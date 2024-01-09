@@ -1,18 +1,12 @@
-import { render, screen } from '@testing-library/react';
-
+import { render, screen } from '@/tests/setup';
 import { AppTheme } from '@/utils/constants';
 
-import { DarkModeProvider } from '../DarkModeToggle/DarkModeProvider';
 import { DARK_MODE_TOGGLE_BUTTON_ICONS } from '../DarkModeToggle/DarkModeToggle.constants';
 import { Header } from './Header';
 import { HEADER_BG_IMAGES, LOGO_HEADING } from './Header.constants';
 
 const setup = () => {
-  render(
-    <DarkModeProvider defaultValue={AppTheme.DARK}>
-      <Header />
-    </DarkModeProvider>
-  );
+  render(<Header />, { defaultTheme: AppTheme.DARK });
 };
 
 describe('Header', () => {
