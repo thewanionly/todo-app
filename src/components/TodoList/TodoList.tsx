@@ -1,4 +1,4 @@
-import { ChangeEvent, ForwardedRef, forwardRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
@@ -12,6 +12,7 @@ import {
 import { Button } from '../Button';
 import { FilterButtons } from '../FilterButtons';
 import { TodoItem, TodoItemMode } from '../TodoItem';
+import { NewTodoItem } from './NewTodoItem';
 import { filterTodoList, generateTodoListCountText } from './TodoList.utils';
 
 export interface TodoItemType {
@@ -20,7 +21,7 @@ export interface TodoItemType {
   isCompleted: boolean;
 }
 
-interface TodoListProps {
+type TodoListProps = {
   className?: string;
   items: TodoItemType[];
   initialFilter?: TodoListFilterValues;
@@ -29,7 +30,7 @@ interface TodoListProps {
   onItemCompletedChange: (id: string, newIsCompleted: boolean) => void;
   onDeleteItem: (id: string) => void;
   onDeleteCompletedItems: () => void;
-}
+};
 
 export const TodoList = forwardRef(function TodoListComponent(
   {
@@ -44,7 +45,6 @@ export const TodoList = forwardRef(function TodoListComponent(
   }: TodoListProps,
   ref: ForwardedRef<HTMLUListElement>
 ) {
-  const [newTodoItemValue, setNewTodoItemValue] = useState('');
   const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(initialFilter);
 
   const filteredItems = filterTodoList(items, currentFilter);
@@ -57,26 +57,13 @@ export const TodoList = forwardRef(function TodoListComponent(
   const showEmptyMessage = isEmptyList || filteredItems.length === 0;
   const emptyMessage = EMPTY_MESSAGE_MAP[currentFilter];
 
-  const handleAddNewTodoItem = (event: ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    // Don't add a new todo item if there's no value
-    if (!newTodoItemValue) return;
-
-    // Add item to the list
-    onAddItem(newTodoItemValue);
-
-    // Clear `newTodoItemValue` value
-    setNewTodoItemValue('');
+  const handleAddNewTodoItem = (value: string) => {
+    onAddItem(value);
 
     // Set `currentFilter` to "all" when adding a new item under "completed" `currentFilter`
     if (currentFilter === TODO_LIST_FILTERS_MAP.completed.value) {
       setCurrentFilter(TODO_LIST_FILTERS_MAP.all.value);
     }
-  };
-
-  const handleNewTodoItemValueChange = (value: string) => {
-    setNewTodoItemValue(value);
   };
 
   const handleEditItemValue = (id: string) => (value: string) => {
@@ -108,15 +95,7 @@ export const TodoList = forwardRef(function TodoListComponent(
 
   return (
     <div className={className}>
-      <form onSubmit={handleAddNewTodoItem} className="relative mb-4 md:mb-6">
-        <TodoItem
-          mode={TodoItemMode.CREATE}
-          value={newTodoItemValue}
-          onEditValue={handleNewTodoItemValueChange}
-        />
-        {/* Need to add in order for form submission by "enter" key works in Jest env as well */}
-        <Button type="submit" aria-hidden className="absolute left-0 top-0" tabIndex={-1} />
-      </form>
+      <NewTodoItem onAddItem={handleAddNewTodoItem} />
       <div className="rounded-[5px] shadow-todo-list-box-shadow">
         {showEmptyMessage && (
           <div
