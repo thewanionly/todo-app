@@ -2,6 +2,8 @@ import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
+import { useStateWithLocalStorage } from '@/hooks';
+
 import {
   CLEAR_COMPLETED_BTN_LABEL,
   EMPTY_MESSAGE_MAP,
@@ -32,6 +34,8 @@ type TodoListProps = {
   onDeleteCompletedItems: () => void;
 };
 
+const FILTER_VALUE_LOCAL_STORAGE_KEY = 'filter_value';
+
 export const TodoList = forwardRef(function TodoListComponent(
   {
     className = '',
@@ -45,7 +49,10 @@ export const TodoList = forwardRef(function TodoListComponent(
   }: TodoListProps,
   ref: ForwardedRef<HTMLUListElement>
 ) {
-  const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(initialFilter);
+  const [currentFilter, setCurrentFilter] = useStateWithLocalStorage<TodoListFilterValues>(
+    FILTER_VALUE_LOCAL_STORAGE_KEY,
+    initialFilter
+  );
   const [mounted, setMounted] = useState(false);
 
   // useEffect only runs on the client, so now we can safely show the UI
