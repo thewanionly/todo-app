@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 
 import { twMerge } from 'tailwind-merge';
 
@@ -46,6 +46,12 @@ export const TodoList = forwardRef(function TodoListComponent(
   ref: ForwardedRef<HTMLUListElement>
 ) {
   const [currentFilter, setCurrentFilter] = useState<TodoListFilterValues>(initialFilter);
+  const [mounted, setMounted] = useState(false);
+
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const filteredItems = filterTodoList(items, currentFilter);
 
@@ -96,81 +102,83 @@ export const TodoList = forwardRef(function TodoListComponent(
   return (
     <div className={className}>
       <NewTodoItem onAddItem={handleAddNewTodoItem} />
-      <div className="rounded-[5px] shadow-todo-list-box-shadow">
-        {showEmptyMessage && (
-          <div
-            className={twMerge(
-              `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg tracking-[-0.167px] text-body-text md:text-lg md:tracking-[-0.25px] ${
-                !isEmptyList ? 'md:rounded-b-none' : ''
-              }`
-            )}
-          >
-            {emptyMessage}
-          </div>
-        )}
-        {!isEmptyList && (
-          <>
-            {!showEmptyMessage && (
-              <ul
-                ref={ref}
-                aria-label="todo list"
-                className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px]"
-              >
-                {filteredItems.map(({ id, value, isCompleted }) => (
-                  <li key={id}>
-                    <TodoItem
-                      className={`rounded-none border-b border-todo-item-bottom-border`}
-                      mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-                      value={value}
-                      onEditValue={handleEditItemValue(id)}
-                      onInputBlur={handleInputBlur(id)}
-                      onToggleCompleted={handleToggleItemCompleted(id)}
-                      onDelete={handleDeleteItem(id)}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
+      {mounted ? (
+        <div className="rounded-[5px] shadow-todo-list-box-shadow">
+          {showEmptyMessage && (
             <div
               className={twMerge(
-                `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-4 md:px-6 ${
-                  showEmptyMessage
-                    ? 'h-0 p-0 md:h-[50px] md:border-t md:border-todo-item-bottom-border md:px-6 md:py-4'
-                    : ''
+                `flex aspect-[2] items-center justify-center rounded-[5px] bg-todo-list-bg tracking-[-0.167px] text-body-text md:text-lg md:tracking-[-0.25px] ${
+                  !isEmptyList ? 'md:rounded-b-none' : ''
                 }`
               )}
             >
-              <span
-                className={`text-sm tracking-[-0.167px] text-body-text md:tracking-[-0.194px] ${
-                  showEmptyMessage ? 'invisible' : ''
-                }`}
-              >
-                {showActiveItemsCount && generateTodoListCountText(activeItemsCount)}
-              </span>
-              <FilterButtons
+              {emptyMessage}
+            </div>
+          )}
+          {!isEmptyList && (
+            <>
+              {!showEmptyMessage && (
+                <ul
+                  ref={ref}
+                  aria-label="todo list"
+                  className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px]"
+                >
+                  {filteredItems.map(({ id, value, isCompleted }) => (
+                    <li key={id}>
+                      <TodoItem
+                        className={`rounded-none border-b border-todo-item-bottom-border`}
+                        mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+                        value={value}
+                        onEditValue={handleEditItemValue(id)}
+                        onInputBlur={handleInputBlur(id)}
+                        onToggleCompleted={handleToggleItemCompleted(id)}
+                        onDelete={handleDeleteItem(id)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div
                 className={twMerge(
-                  `absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none ${
-                    showEmptyMessage ? 'mt-4' : ''
+                  `relative flex items-center justify-between gap-3 rounded-b-[5px] bg-todo-list-bg px-5 py-4 md:px-6 ${
+                    showEmptyMessage
+                      ? 'h-0 p-0 md:h-[50px] md:border-t md:border-todo-item-bottom-border md:px-6 md:py-4'
+                      : ''
                   }`
                 )}
-                filters={TODO_LIST_FILTERS}
-                defaultFilter={currentFilter}
-                onSelectFilter={handleFilterChange}
-              />
-              {showClearCompletedBtn && (
-                <Button
-                  className={`p-0 text-sm tracking-[-0.167px] text-clear-completd-btn-text  hover:text-clear-completd-btn-text-hover md:tracking-[-0.194px] ${
+              >
+                <span
+                  className={`text-sm tracking-[-0.167px] text-body-text md:tracking-[-0.194px] ${
                     showEmptyMessage ? 'invisible' : ''
                   }`}
-                  onClick={handleDeleteCompletedItems}
                 >
-                  {CLEAR_COMPLETED_BTN_LABEL}
-                </Button>
-              )}
-            </div>
-          </>
-        )}
-      </div>
+                  {showActiveItemsCount && generateTodoListCountText(activeItemsCount)}
+                </span>
+                <FilterButtons
+                  className={twMerge(
+                    `absolute left-0 top-0 mt-16 w-full md:inset-1/2 md:mt-0 md:h-full md:w-max md:-translate-x-1/2 md:-translate-y-1/2 md:transform md:p-0 md:shadow-none ${
+                      showEmptyMessage ? 'mt-4' : ''
+                    }`
+                  )}
+                  filters={TODO_LIST_FILTERS}
+                  defaultFilter={currentFilter}
+                  onSelectFilter={handleFilterChange}
+                />
+                {showClearCompletedBtn && (
+                  <Button
+                    className={`p-0 text-sm tracking-[-0.167px] text-clear-completd-btn-text  hover:text-clear-completd-btn-text-hover md:tracking-[-0.194px] ${
+                      showEmptyMessage ? 'invisible' : ''
+                    }`}
+                    onClick={handleDeleteCompletedItems}
+                  >
+                    {CLEAR_COMPLETED_BTN_LABEL}
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 });

@@ -46,6 +46,10 @@ const setup = ({ showEmptyList = false }: SetupOptions = {}) => {
   render(<TodoListSetup isEmptyList={showEmptyList} />);
 };
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
 describe('TodoList', () => {
   describe('Todo list in general', () => {
     it('displays a list of todo items', () => {
