@@ -93,7 +93,7 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
             <ul
               ref={ref}
               aria-label="todo list"
-              className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px]"
+              className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px] bg-todo-list-bg"
             >
               {filteredItems.map(({ id, value, isCompleted }) => (
                 <li key={id}>
