@@ -38,7 +38,7 @@ const config: Config = {
 }
 ```
 
-2. To toggle dark mode in the application, use the `useDarkMode` (TODO: implement this) custom hook. Create a theme switcher button and use the `toggleDarkMode` function returned by the `useDarkMode` and pass it to the onClick handler of the theme switcher button. This custom hook adds a `dark` class to the `html` tag.
+2. To toggle dark mode in the application, use the `useDarkMode` custom hook. Create a theme switcher button and use the `toggleDarkMode` function returned by the `useDarkMode` and pass it to the onClick handler of the theme switcher button. This custom hook adds a `dark` class to the `html` tag.
 
 3. The added `dark` class to the `html` tag is being picked up by Tailwind CSS. In your JSX, the utility classes that are prepended with `dark:` will be applied whenever `dark` class is present in the `html` tag. (Reference: https://tailwindcss.com/docs/dark-mode)
 

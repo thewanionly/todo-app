@@ -15,7 +15,7 @@ export default function Home() {
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
-  } = useTodoList([]); // TODO: get initial from local storage
+  } = useTodoList([]);
 
   return (
     <>
