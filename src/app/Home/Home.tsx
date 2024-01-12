@@ -24,16 +24,18 @@ export const Home = () => {
           `mx-auto mt-12 w-[87.2%] min-w-[300px] max-w-xl md:mt-14 lg:mt-16 xl:mt-20`
         )}
       />
-      <TodoList
-        ref={todoListRef}
-        className="relative z-10 mx-auto mt-10 w-[87.2%] min-w-[300px] max-w-xl md:mt-12"
-        items={items}
-        onAddItem={onAddItem}
-        onItemValueChange={onItemValueChange}
-        onItemCompletedChange={onItemCompletedChange}
-        onDeleteItem={onDeleteItem}
-        onDeleteCompletedItems={onDeleteCompletedItems}
-      />
+      <main>
+        <TodoList
+          ref={todoListRef}
+          className="relative z-10 mx-auto mt-10 w-[87.2%] min-w-[300px] max-w-xl md:mt-12"
+          items={items}
+          onAddItem={onAddItem}
+          onItemValueChange={onItemValueChange}
+          onItemCompletedChange={onItemCompletedChange}
+          onDeleteItem={onDeleteItem}
+          onDeleteCompletedItems={onDeleteCompletedItems}
+        />
+      </main>
     </>
   );
 };
