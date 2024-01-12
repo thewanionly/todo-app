@@ -87,7 +87,7 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
           />
         ) : (
           <span
-            className={`mt-px h-[18px] w-[19px] rounded-full bg-todo-item-toggle-bg md:h-[22px] md:w-[23px]`}
+            className={`h-[18px] w-[18px] rounded-full bg-todo-item-toggle-bg md:h-[22px] md:w-[22px]`}
             aria-hidden="true"
           />
         )}
