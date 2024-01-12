@@ -14,7 +14,8 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --verbose",
     "storybook": "storybook dev -p 6006 --ci",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "next": "14.0.1",
