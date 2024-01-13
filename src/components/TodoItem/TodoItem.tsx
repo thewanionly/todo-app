@@ -67,7 +67,7 @@ const TodoItemCheckbox = ({ checked, onChange, disabled = false }: TodoItemCheck
       <input
         type="checkbox"
         id={checkboxId}
-        className="peer appearance-none focus-visible:outline-0"
+        className="peer h-0 w-0 appearance-none focus-visible:outline-0"
         checked={checked}
         onChange={onChange}
         disabled={disabled}
