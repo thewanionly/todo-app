@@ -11,7 +11,7 @@
     "prettier:check": "npx prettier --check .",
     "prettier:fix": "npx prettier --write .",
     "prepare": "husky install",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test:watch": "jest --watch --verbose",
     "storybook": "storybook dev -p 6006 --ci",
     "build-storybook": "storybook build",
