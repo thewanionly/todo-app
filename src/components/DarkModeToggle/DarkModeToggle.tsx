@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import { motion } from 'framer-motion';
+
 import { AppTheme } from '@/utils/constants';
 
 import { Button } from '../Button';
@@ -27,10 +29,16 @@ export const DarkModeToggle = ({ isDarkMode, onToggle }: DarkModeToggleProps) =>
 
   return (
     <Button aria-label="dark-mode-toggle-button" className="p-0" onClick={onToggle}>
-      <Icon
-        name={icon}
-        className="h-5 w-5 text-dark-mode-toggle-btn hover:text-dark-mode-toggle-btn-hover md:h-[26px] md:w-[26px]"
-      />
+      <motion.div
+        layout
+        whileHover={{ scale: 1.2 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        <Icon
+          name={icon}
+          className="h-5 w-5 text-dark-mode-toggle-btn hover:text-dark-mode-toggle-btn-hover md:h-[26px] md:w-[26px]"
+        />
+      </motion.div>
     </Button>
   );
 };
