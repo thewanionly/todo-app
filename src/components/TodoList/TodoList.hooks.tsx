@@ -70,5 +70,6 @@ export const useTodoList = (initialItems: TodoItemType[]) => {
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
+    setItems,
   };
 };

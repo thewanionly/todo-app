@@ -24,6 +24,7 @@ const TodoListSetup = ({ isEmptyList = false }: { isEmptyList?: boolean }) => {
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
+    setItems,
   } = useTodoList(isEmptyList ? [] : MOCKED_TODO_LIST_ITEMS);
 
   return (
@@ -34,6 +35,7 @@ const TodoListSetup = ({ isEmptyList = false }: { isEmptyList?: boolean }) => {
       onItemCompletedChange={onItemCompletedChange}
       onDeleteItem={onDeleteItem}
       onDeleteCompletedItems={onDeleteCompletedItems}
+      setItems={setItems}
     />
   );
 };

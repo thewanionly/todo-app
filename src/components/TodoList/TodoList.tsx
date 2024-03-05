@@ -1,3 +1,5 @@
+'use client';
+
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 
 import { useStateWithLocalStorage } from '@/hooks';
@@ -21,6 +23,7 @@ type TodoListProps = {
   onItemCompletedChange: (id: string, newIsCompleted: boolean) => void;
   onDeleteItem: (id: string) => void;
   onDeleteCompletedItems: () => void;
+  setItems: (items: TodoItemType[]) => void;
 };
 
 const FILTER_VALUE_LOCAL_STORAGE_KEY = 'filter_value';

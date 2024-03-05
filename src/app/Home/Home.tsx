@@ -12,6 +12,7 @@ export const Home = () => {
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
+    setItems,
   } = useTodoList([]);
 
   return (
@@ -25,6 +26,7 @@ export const Home = () => {
         onItemCompletedChange={onItemCompletedChange}
         onDeleteItem={onDeleteItem}
         onDeleteCompletedItems={onDeleteCompletedItems}
+        setItems={setItems}
       />
     </main>
   );

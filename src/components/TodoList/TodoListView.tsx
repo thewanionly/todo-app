@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef } from 'react';
 
+import { Reorder } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
 
 import {
@@ -23,6 +24,7 @@ type TodoListViewProps = {
   onDeleteItem: (id: string) => void;
   onDeleteCompletedItems: () => void;
   onFilterChange: (value: TodoListFilterValues) => void;
+  setItems: (items: TodoItemType[]) => void;
 };
 
 export const TodoListView = forwardRef(function TodoListViewComponent(
@@ -34,6 +36,7 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
     onDeleteItem,
     onDeleteCompletedItems,
     onFilterChange,
+    setItems,
   }: TodoListViewProps,
   ref: ForwardedRef<HTMLUListElement>
 ) {
@@ -90,25 +93,33 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
       {!isEmptyList && (
         <>
           {!showEmptyMessage && (
-            <ul
+            <Reorder.Group
+              axis="y"
+              values={filteredItems}
+              onReorder={setItems}
+              layoutScroll
               ref={ref}
               aria-label="todo list"
               className="todo-list max-h-[41.2vh] overflow-auto rounded-t-[5px] bg-todo-list-bg"
             >
-              {filteredItems.map(({ id, value, isCompleted }) => (
-                <li key={id}>
-                  <TodoItem
-                    className={`rounded-none border-b border-todo-item-bottom-border`}
-                    mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
-                    value={value}
-                    onEditValue={handleEditItemValue(id)}
-                    onInputBlur={handleInputBlur(id)}
-                    onToggleCompleted={handleToggleItemCompleted(id)}
-                    onDelete={handleDeleteItem(id)}
-                  />
-                </li>
-              ))}
-            </ul>
+              {filteredItems.map((item) => {
+                const { id, value, isCompleted } = item;
+
+                return (
+                  <Reorder.Item key={id} value={item}>
+                    <TodoItem
+                      className={`rounded-none border-b border-todo-item-bottom-border`}
+                      mode={isCompleted ? TodoItemMode.COMPLETED : TodoItemMode.ACTIVE}
+                      value={value}
+                      onEditValue={handleEditItemValue(id)}
+                      onInputBlur={handleInputBlur(id)}
+                      onToggleCompleted={handleToggleItemCompleted(id)}
+                      onDelete={handleDeleteItem(id)}
+                    />
+                  </Reorder.Item>
+                );
+              })}
+            </Reorder.Group>
           )}
           <div
             className={twMerge(

@@ -26,6 +26,7 @@ const TodoListContainer = ({ initialItems = [], initialFilter }: TodoListContain
     onItemCompletedChange,
     onDeleteItem,
     onDeleteCompletedItems,
+    setItems,
   } = useTodoList(initialItems);
 
   return (
@@ -40,6 +41,7 @@ const TodoListContainer = ({ initialItems = [], initialFilter }: TodoListContain
         onItemCompletedChange={onItemCompletedChange}
         onDeleteItem={onDeleteItem}
         onDeleteCompletedItems={onDeleteCompletedItems}
+        setItems={setItems}
       />
     </div>
   );
