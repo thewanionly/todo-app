@@ -32,6 +32,7 @@ export const CLEAR_COMPLETED_BTN_LABEL = 'Clear Completed';
 export const EMPTY_TODO_LIST_MESSAGE = 'You have no todo items.';
 export const NO_ACTIVE_TODO_ITEMS_MESSAGE = 'You have no active todo items.';
 export const NO_COMPLETED_TODO_ITEMS_MESSAGE = 'You have no completed todo items.';
+export const DRAG_AND_DROP_MESSAGE = 'Drag and drop to reorder list';
 
 export const EMPTY_MESSAGE_MAP: Record<TodoListFilterValues, string> = {
   [TodoListFilterValues.All]: EMPTY_TODO_LIST_MESSAGE,

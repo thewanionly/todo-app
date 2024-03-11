@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge';
 
 import {
   CLEAR_COMPLETED_BTN_LABEL,
+  DRAG_AND_DROP_MESSAGE,
   EMPTY_MESSAGE_MAP,
   TODO_LIST_FILTERS,
   TODO_LIST_FILTERS_MAP,
@@ -78,7 +79,7 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
   };
 
   return (
-    <div className="rounded-[5px] shadow-todo-list-box-shadow">
+    <div className="relative rounded-[5px] shadow-todo-list-box-shadow">
       {showEmptyMessage && (
         <div
           className={twMerge(
@@ -159,6 +160,11 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
             )}
           </div>
         </>
+      )}
+      {items.length > 1 && (
+        <p className="absolute mt-[108px] w-full text-center md:mt-[49px]">
+          {DRAG_AND_DROP_MESSAGE}
+        </p>
       )}
     </div>
   );

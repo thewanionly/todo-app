@@ -6,6 +6,7 @@ import { CREATE_TODO_PLACEHOLDER } from '../TodoItem';
 import { TodoList } from './TodoList';
 import {
   CLEAR_COMPLETED_BTN_LABEL,
+  DRAG_AND_DROP_MESSAGE,
   EMPTY_TODO_LIST_MESSAGE,
   MOCKED_TODO_LIST_ITEMS,
   NO_ACTIVE_TODO_ITEMS_MESSAGE,
@@ -68,6 +69,47 @@ describe('TodoList', () => {
 
       const emptyMessage = screen.getByText(EMPTY_TODO_LIST_MESSAGE);
       expect(emptyMessage).toBeInTheDocument();
+    });
+
+    it(`displays no drag and drop message when there is no todo items`, () => {
+      setup({ showEmptyList: true });
+
+      const dndMessage = screen.queryByText(DRAG_AND_DROP_MESSAGE);
+      expect(dndMessage).not.toBeInTheDocument();
+    });
+
+    it(`displays no drag and drop message when todo items is only one`, async () => {
+      setup({ showEmptyList: true });
+
+      // input value
+      const newTodoItemValue = 'New value test';
+      const addTodoInput = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput, newTodoItemValue);
+
+      // click enter
+      await userEvent.type(addTodoInput, '{enter}');
+
+      const dndMessage = screen.queryByText(DRAG_AND_DROP_MESSAGE);
+      expect(dndMessage).not.toBeInTheDocument();
+    });
+
+    it(`displays a drag and drop message when todo items are more than one`, async () => {
+      setup({ showEmptyList: true });
+
+      // input item 1
+      const newTodoItemValue1 = 'New value test 1';
+      const addTodoInput1 = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput1, newTodoItemValue1);
+      await userEvent.type(addTodoInput1, '{enter}');
+
+      // input item 2
+      const newTodoItemValue2 = 'New value test 2';
+      const addTodoInput2 = screen.getByPlaceholderText(CREATE_TODO_PLACEHOLDER);
+      await userEvent.type(addTodoInput2, newTodoItemValue2);
+      await userEvent.type(addTodoInput2, '{enter}');
+
+      const dndMessage = screen.getByText(DRAG_AND_DROP_MESSAGE);
+      expect(dndMessage).toBeInTheDocument();
     });
   });
 
