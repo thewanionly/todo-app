@@ -161,7 +161,7 @@ export const TodoListView = forwardRef(function TodoListViewComponent(
           </div>
         </>
       )}
-      {items.length > 1 && (
+      {filteredItems.length > 1 && (
         <p className="absolute mt-[108px] w-full text-center text-sm text-body-text md:mt-[49px]">
           {DRAG_AND_DROP_MESSAGE}
         </p>
